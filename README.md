@@ -53,13 +53,48 @@ The dolphin remained fictional. The debugging did not.
 | **GameHack Zero 4.2.0** | R36XX handheld running a Debian/Armbian-based system and controller-driven tools. |
 | **Pi companion OS** | Raspberry Pi Zero W running Raspberry Pi OS Lite and a subordinate USB worker. |
 | **USB-C IR accessory** | External infrared adapter; the sender implementation targets Tiqiaa/Tview hardware with USB ID `10c4:8468`. |
-| **64GB system card** | The handheld's OS, launcher, local state, and internal game fallback. |
+| **64GB system card** | Preserved working installation and source for the single-card migration. |
 | **32GB Pi card** | The sidekick's OS, worker queue, and saved results. |
-| **256GB expansion card** | Separate debug and ROM storage. Currently starring in our TF2 troubleshooting arc. |
-| **128GB replacement expansion card** | Formatted for a TF2 comparison; new mount-ID update is staged, not yet deployed. |
+| **256GB single-card route** | BOOT, system, debug/captures and ROMs together in TF1; migration verification is in progress. |
+| **128GB expansion card** | Prepared ROM/debug storage for TF2; native TF2 detection remains unresolved. |
 
 The handheld is the captain. The Pi is the crew—not a replacement for the
 handheld's Wi-Fi, and not an excuse to require SSH for every interaction.
+
+## 💾 256GB single-card route — TF1 only
+
+The current development route puts the handheld OS and libraries on **one 256GB
+card in TF1**, leaving TF2 empty. This bypasses the TF2 initialization failure;
+**it does not fix TF2**. The original 64GB system card remains unchanged.
+
+| Area | Allocation | Purpose |
+| --- | --- | --- |
+| Reserved bootloader area | 16MiB | Preserve the working Rockchip bootloader placement |
+| BOOT | 256MiB, FAT32 | Boot settings and working display/panel assets |
+| System | 24GiB, ext4 | GameHack OS, apps, local state and saves |
+| Debug / captures | ~27.74GiB, ext4 | Private diagnostics, authorized Wi-Fi PCAPs and recon files |
+| ROMs / BIOS / media | ~186.3GiB, exFAT | Game and media library |
+
+**20GiB was reassigned from the previous ROM allocation to debug/capture storage.**
+This is shared space on the debug filesystem, not a separate enforced capture
+quota. Keep captures private and only collect traffic you are permitted to inspect.
+
+The intended mount paths remain `/data/debug` and `/data/external`; captures use
+`/data/debug/captures`. Reviewed safety changes refuse capture when that debug
+volume is not mounted, and refuse expansion eject when storage shares the running
+system disk. **Shut down fully before removing the TF1 system card.**
+
+**Current status:** the current system/BOOT/bootloader copy and existing ROM/BIOS
+files were preserved and verified on the development PC. The new layout has been
+created and files restored; byte-for-byte restoration verification is still in
+progress. Final filesystem checks, safety-update deployment, native TF1-only boot
+and actual ROM gameplay remain pending. Do not treat this README as a completed
+hardware test or an instruction to flash an older release image.
+
+The draft image assets and public source snapshot do **not** yet contain a newly
+validated 256GB build. No updated flashable image is being announced here. A
+migration must preserve ROM/BIOS data before recreation—exFAT cannot safely shrink
+in place. A single reader can be used sequentially via verified PC-held copies.
 
 ## 🧰 What's in the toolbox?
 
@@ -126,6 +161,7 @@ The story is playful. The status reports are not.
 | IR carrier | The current Tiqiaa adapter uses a fixed ~36.6kHz carrier. Database frequencies cannot change that hardware limitation. |
 | Pi USB networking | NCM validated on a PC. Handheld connectivity and Wi-Fi coexistence still need validation. |
 | TF2 / expansion card | Not fixed: the handheld times out during controller initialization, before partitions or ROMs can be read. |
+| 256GB TF1-only route | Layout and restore created; verification in progress. Native boot/gameplay still pending; bypasses rather than repairs TF2. |
 | Local OpenCode | Frontend installed; native provider execution and interactive compatibility remain to be verified. |
 | Original Zero-Day feature set | Audited and partially adapted—not a claim that every upstream feature has been ported. |
 
