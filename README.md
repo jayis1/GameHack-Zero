@@ -81,13 +81,20 @@ handheld's Wi-Fi, and not an excuse to require SSH for every interaction.
 IR requires a supported USB adapter; other accessories have their own hardware
 and driver requirements.
 
-### Optional side project — coming later
+### Optional side project — Nimbus FieldKit
 
-The **SanDisk Wireless Media Drive / Nimbus FieldKit** project is being developed
-separately for optional networking, storage and field tools. **That project has
-not been uploaded yet.** Existing handheld adapter hooks are included here;
-the drive project, firmware files, live-device reports and its full toolkit are
-not. Neither GameHack nor the Pi requires a SanDisk drive.
+The **SanDisk Wireless Media Drive / Nimbus FieldKit** project is now available
+in its own public repository:
+**[jayis1/nimbus-fieldkit](https://github.com/jayis1/nimbus-fieldkit)**.
+
+It provides the optional networking/storage/field-tool side of the ecosystem,
+including the SanDisk dashboard and native-toolkit work. Follow that repository
+for its source, deployment guidance and current device-validation status;
+uploading source is not proof that every integration is hardware-tested.
+
+Existing handheld adapter hooks are included here, but the separate drive
+project is not vendored into GameHack. **Neither GameHack nor the Pi requires
+a SanDisk drive.** The Pi remains the independent pinned USB worker.
 
 ## 🚧 Development build, not a magic wand
 
