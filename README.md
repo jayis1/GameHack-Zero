@@ -55,7 +55,7 @@ The dolphin remained fictional. The debugging did not.
 | **USB-C IR accessory** | External infrared adapter; the sender implementation targets Tiqiaa/Tview hardware with USB ID `10c4:8468`. |
 | **64GB system card** | Preserved working installation and source for the single-card migration. |
 | **32GB Pi card** | The sidekick's OS, worker queue, and saved results. |
-| **256GB single-card route** | BOOT, system, debug/captures and ROMs together in TF1; migration verification is in progress. |
+| **256GB single-card route** | BOOT, system, debug/captures and ROMs together in TF1; restoration/filesystem checks passed, native boot pending. |
 | **128GB expansion card** | Prepared ROM/debug storage for TF2; native TF2 detection remains unresolved. |
 
 The handheld is the captain. The Pi is the crew—not a replacement for the
@@ -85,10 +85,11 @@ volume is not mounted, and refuse expansion eject when storage shares the runnin
 system disk. **Shut down fully before removing the TF1 system card.**
 
 **Current status:** the current system/BOOT/bootloader copy and existing ROM/BIOS
-files were preserved and verified on the development PC. The new layout has been
-created and files restored; byte-for-byte restoration verification is still in
-progress. Final filesystem checks, safety-update deployment, native TF1-only boot
-and actual ROM gameplay remain pending. Do not treat this README as a completed
+files were preserved and verified on the development PC. All 7,220 library files
+passed byte-for-byte restoration verification, all four filesystems passed checks,
+and bootloader/boot settings and reviewed safety updates were verified. The card
+was safely ejected. Native TF1-only boot and actual ROM gameplay remain pending.
+Do not treat this README as a completed
 hardware test or an instruction to flash an older release image.
 
 The draft image assets and public source snapshot do **not** yet contain a newly
@@ -161,7 +162,7 @@ The story is playful. The status reports are not.
 | IR carrier | The current Tiqiaa adapter uses a fixed ~36.6kHz carrier. Database frequencies cannot change that hardware limitation. |
 | Pi USB networking | NCM validated on a PC. Handheld connectivity and Wi-Fi coexistence still need validation. |
 | TF2 / expansion card | Not fixed: the handheld times out during controller initialization, before partitions or ROMs can be read. |
-| 256GB TF1-only route | Layout and restore created; verification in progress. Native boot/gameplay still pending; bypasses rather than repairs TF2. |
+| 256GB TF1-only route | Restore, file comparison, bootloader and all filesystem checks passed; safely ejected. Native boot/gameplay pending; bypasses rather than repairs TF2. |
 | Local OpenCode | Frontend installed; native provider execution and interactive compatibility remain to be verified. |
 | Original Zero-Day feature set | Audited and partially adapted—not a claim that every upstream feature has been ported. |
 
