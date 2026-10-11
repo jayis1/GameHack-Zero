@@ -52,6 +52,7 @@ The dolphin remained fictional. The debugging did not.
 | --- | --- |
 | **GameHack Zero 4.2.0** | R36XX handheld running a Debian/Armbian-based system and controller-driven tools. |
 | **Pi companion OS** | Raspberry Pi Zero W running Raspberry Pi OS Lite and a subordinate USB worker. |
+| **USB-C IR accessory** | External infrared adapter; the sender implementation targets Tiqiaa/Tview hardware with USB ID `10c4:8468`. |
 | **64GB system card** | The handheld's OS, launcher, local state, and internal game fallback. |
 | **32GB Pi card** | The sidekick's OS, worker queue, and saved results. |
 | **256GB expansion card** | Separate debug and ROM storage. Currently starring in our TF2 troubleshooting arc. |
@@ -80,6 +81,24 @@ handheld's Wi-Fi, and not an excuse to require SSH for every interaction.
 **No NFC. No Sub-GHz. No pretending software can summon missing hardware.**
 IR requires a supported USB adapter; other accessories have their own hardware
 and driver requirements.
+
+### USB-C infrared device
+
+GameHack uses an **external USB-C IR adapter**, not an infrared transmitter built
+into the handheld. The current sender targets **Tiqiaa/Tview (`10c4:8468`)**.
+Connect it through a USB-host-capable connection (with an appropriate OTG adapter
+if needed); a USB-C connector alone does not guarantee a compatible protocol.
+Generic phone IR accessories are not automatically supported.
+
+Use **INFRARED → IR hardware** to check detection, then **Browse remote library**
+to select a remote and button. **R2 selects; L2 goes back.** Transmission requires
+confirmation and is only for devices you own or are permitted to operate.
+
+The adapter's sender uses a fixed **~36.6kHz carrier**. Supported database formats
+are raw timings, NEC and NECext; unsupported protocols/carriers may not work.
+Native capture and transmission still require hardware validation—installed
+software and a populated remote library are not proof of successful IR operation.
+See [IR-DATABASE.md](hackeros-v3/IR-DATABASE.md) for details.
 
 ### Optional side project — Nimbus FieldKit
 
