@@ -1,0 +1,47 @@
+#!/usr/bin/python3
+"""Small SSH-operated companion controller; no unauthenticated web listener."""
+import json
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+
+def status():
+    temperature = Path('/sys/class/thermal/thermal_zone0/temp')
+    uptime = Path('/proc/uptime')
+    return {
+        'name': 'GameHack Companion',
+        'worker_version': 2,
+        'release_version': '4.2.0',
+        'task_runtime_limit_seconds': 120,
+        'hostname': Path('/etc/hostname').read_text().strip(),
+        'uptime_seconds': int(float(uptime.read_text().split()[0])) if uptime.exists() else None,
+        'temperature_c': int(temperature.read_text()) / 1000 if temperature.exists() else None,
+        'storage_free_mb': shutil.disk_usage('/').free // (1024 * 1024),
+        'shared_folder': '/home/companion/shared',
+        'usb_address': '192.168.77.1',
+    }
+
+
+def main():
+    args = sys.argv[1:]
+    if args and args[0] in ('submit', 'jobs', 'result', 'cancel'):
+        return subprocess.call(['/usr/bin/python3', '/usr/local/lib/gamehack-worker.py', *args])
+    if args and args[0] == 'radio':
+        return subprocess.call(['sudo', '-n', '/usr/local/sbin/gamehack-radio', *args[1:]])
+    if args == ['status']:
+        print(json.dumps(status(), indent=2))
+    elif args == ['files']:
+        for item in sorted(Path('/home/companion/shared').iterdir()):
+            print(json.dumps({'name': item.name, 'directory': item.is_dir()}))
+    elif args in (['shutdown'], ['reboot']):
+        subprocess.run(['sudo', '-n', '/usr/local/sbin/gamehack-companion-power', args[0]], check=True)
+    else:
+        print('GameHack Companion: status | files | shutdown | reboot | submit COMMAND | jobs | result ID | cancel ID | radio ACTION')
+        return 2
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

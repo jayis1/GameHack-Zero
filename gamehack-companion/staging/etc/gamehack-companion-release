@@ -1,0 +1,4 @@
+NAME="GameHack Zero Pi Companion"
+VERSION="4.2.0"
+WORKER_PROTOCOL="2"
+BASE="Raspberry Pi OS Lite 32-bit"

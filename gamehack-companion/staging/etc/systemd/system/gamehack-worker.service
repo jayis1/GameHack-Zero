@@ -1,0 +1,19 @@
+[Unit]
+Description=GameHack on-demand Pi worker queue
+After=local-fs.target
+
+[Service]
+User=companion
+Group=companion
+Environment=HOME=/home/companion
+ExecStart=/usr/bin/python3 /usr/local/lib/gamehack-worker.py daemon
+Restart=on-failure
+RestartSec=3
+KillMode=control-group
+TimeoutStopSec=10
+UMask=0077
+ProtectSystem=full
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target

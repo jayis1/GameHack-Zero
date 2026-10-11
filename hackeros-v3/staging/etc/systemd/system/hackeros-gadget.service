@@ -1,0 +1,13 @@
+[Unit]
+Description=GameHack Zero OTG maintenance gadget
+After=systemd-modules-load.service
+Before=hackeros-usb-network.service
+ConditionPathExistsGlob=/sys/class/udc/*
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/hackeros-gadget
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

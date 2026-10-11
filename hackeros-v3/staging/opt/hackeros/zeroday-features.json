@@ -1,0 +1,1962 @@
+{
+  "source": "https://github.com/jayis1/Zero-Day-OS-",
+  "revision": "b697bdd50d4ea38cfb421e60353ecbe42343f7f4",
+  "scripts": [
+    {
+      "name": "bettercap",
+      "category": "bluetooth",
+      "source": "scripts/bluetooth/bettercap",
+      "sha256": "b62fbaa2f9ae7749fc0fd8bb46f68cf7d4d0cc0e7f19514b5e1a43b3d9a04165",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "ble-gatt",
+      "category": "bluetooth",
+      "source": "scripts/bluetooth/ble-gatt",
+      "sha256": "09d2130e4efa4f5b55d9982146aa5e7e3d910006c95d03f626378235ef3703e0",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "ble-spam",
+      "category": "bluetooth",
+      "source": "scripts/bluetooth/ble-spam",
+      "sha256": "28838cb32a9b35e515ad9c33787aadd6d751f2c21822fde484acd330df55a96e",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    },
+    {
+      "name": "bt-attack",
+      "category": "bluetooth",
+      "source": "scripts/bluetooth/bt-attack",
+      "sha256": "a8e41e9073c45530cb8435739d0eaa43b4b0fde4697905bde0719dde65dedd7f",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    },
+    {
+      "name": "bt-deep",
+      "category": "bluetooth",
+      "source": "scripts/bluetooth/bt-deep",
+      "sha256": "8496a509d287967e1dbab300ee6b96342297a073bf08cb63562c4eb17833a42a",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "bt-scan",
+      "category": "bluetooth",
+      "source": "scripts/bluetooth/bt-scan",
+      "sha256": "1fea13967e345200270e071da035eed1fd8d25507035dc5af4a2fd1c76bb81c8",
+      "status": "adapted subset",
+      "note": "Bounded Bluetooth discovery; hardware support remains unverified."
+    },
+    {
+      "name": "cam-ocr",
+      "category": "camera",
+      "source": "scripts/camera/cam-ocr",
+      "sha256": "afaac1ae86917c07443ecf42f78f199675cc9d3936e0e1047cf9f001ae47923d",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "cam-snap",
+      "category": "camera",
+      "source": "scripts/camera/cam-snap",
+      "sha256": "0b1162680d0fb631310f20a6b0c7aaf9e04bb508b4394debb3978e3eed400984",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "cam-stream",
+      "category": "camera",
+      "source": "scripts/camera/cam-stream",
+      "sha256": "efec995db1846dea63d9fb78e7e6affec868faca0d5f064bef5f675c0004e9c2",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "dongle-setup",
+      "category": "dongle",
+      "source": "scripts/dongle/dongle-setup",
+      "sha256": "e61a140ba13e0b8cae2663156931264ba8e61da76d14deb43764f4c36eff97a5",
+      "status": "adapted subset",
+      "note": "RTL8821CU driver and capability checks; native loading still needs testing."
+    },
+    {
+      "name": "gatt_server.py",
+      "category": "hardware",
+      "source": "scripts/hardware/ble-remote/gatt_server.py",
+      "sha256": "9eaa9f5a2303747b29ee2027bc19b7cf40514674e7af26d61eb4466c71c9732f",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "c6l-ctl",
+      "category": "hardware",
+      "source": "scripts/hardware/c6l-ctl",
+      "sha256": "8d56bf7a23e4afaad450aeebb951fd27d8ba500fe533995a96aab2e0431781ad",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "c6l-middleman",
+      "category": "hardware",
+      "source": "scripts/hardware/c6l-middleman",
+      "sha256": "522d7194d56ed9e7ed64e797acf8bb54fab42f59b976bf410e96b2a7ac63d458",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "cardputer-battery",
+      "category": "hardware",
+      "source": "scripts/hardware/cardputer-battery",
+      "sha256": "fbe97dc0ff85346f5bb10cdc67f0dfe4d80b44e909b2768c3cdebec2c46dfd61",
+      "status": "adapted subset",
+      "note": "Linux power-supply readings, not Cardputer BQ27220 registers."
+    },
+    {
+      "name": "doom-play",
+      "category": "hardware",
+      "source": "scripts/hardware/doom-play",
+      "sha256": "967e4ab15f510fb53a82dd73c2bfac71bb42b260fd6dee3fd2db81729bcaa3bc",
+      "status": "adapted subset",
+      "note": "Freedoom Phase 1/2 with controller bridge and audio-contention fix."
+    },
+    {
+      "name": "ext-display",
+      "category": "hardware",
+      "source": "scripts/hardware/ext-display",
+      "sha256": "3954fbf167f333c0656aa6a4300c05751e99a7d71077b563f8ca8b846f3eb676",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "gpio-probe",
+      "category": "hardware",
+      "source": "scripts/hardware/gpio-probe",
+      "sha256": "3ef440019bda5755881bd95ea9fb9e450d61b32724b939a967682994231b66c7",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "gps-ctl",
+      "category": "hardware",
+      "source": "scripts/hardware/gps-ctl",
+      "sha256": "95fc56bd3f49b5dc5f5fdcefb4c8a010011bf412a1875c8c8cae170870c77eec",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "install-janos",
+      "category": "hardware",
+      "source": "scripts/hardware/install-janos",
+      "sha256": "9accdf581e28e6d6c2c804a219cebea95465f22fc55d4ff658a0001cd819182f",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "jellyfin-tv",
+      "category": "hardware",
+      "source": "scripts/hardware/jellyfin-tv",
+      "sha256": "ad8b9b00f777889daea1cf724997f4529de5822fcedc817b3c876a1eb47b2565",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "monsterctl",
+      "category": "hardware",
+      "source": "scripts/hardware/monsterctl",
+      "sha256": "dd3e29b93b4d45f51f7ff3061371cd8375879d6772d4ac810e0f88ac58f44f9a",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "oled-ctl",
+      "category": "hardware",
+      "source": "scripts/hardware/oled-ctl",
+      "sha256": "2eeeff0523420f65d609841e0be1f6296e8936a76436928b2d1ac1d4e7730b10",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "retro-play",
+      "category": "hardware",
+      "source": "scripts/hardware/retro-play",
+      "sha256": "74317f3bddf5634f487e8b0d3f3015d23f933fa895e3849a5cad036e08c6f8d6",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "rf-capture",
+      "category": "hardware",
+      "source": "scripts/hardware/rf-capture",
+      "sha256": "e21d1b6aec68ee232e0543cddad65542331b767d815ee4a1e3b9ad4373132580",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "rfid2-ctl",
+      "category": "hardware",
+      "source": "scripts/hardware/rfid2-ctl",
+      "sha256": "789a0d02e4138a2cf0567167faf9d6f3f46df6f0ea4754cad6ef5c36906a85e9",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "sdr-scan",
+      "category": "hardware",
+      "source": "scripts/hardware/sdr-scan",
+      "sha256": "e70f3450698c94f5c3e5bd1e9845adc7c6ea6d9de9adc617f9e6b697535c366e",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "yt",
+      "category": "hardware",
+      "source": "scripts/hardware/yt",
+      "sha256": "1e97c2e5e298edd0d90de3b28babaa49d35402957aa43132bf30e4fb9a743aea",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "zeroday-ble-remote",
+      "category": "hardware",
+      "source": "scripts/hardware/zeroday-ble-remote",
+      "sha256": "54e3b68abf6aaa4928868a7b7a2c6c8cded943cbd2b5b1b321bc9e9893da9ad2",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "ir-brute",
+      "category": "ir",
+      "source": "scripts/ir/ir-brute",
+      "sha256": "a841dd6a595e9e629cfad4344a847e91fe83c41bc1d871d1e22b4cbba258fcbe",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "ir-replay",
+      "category": "ir",
+      "source": "scripts/ir/ir-replay",
+      "sha256": "8924ec11b895ba7c0088309c71742852dea493202f4ec8dc2825b6f29b91b253",
+      "status": "adapted subset",
+      "note": "Raw IR replay with the supported USB device; native testing required."
+    },
+    {
+      "name": "ir-scan",
+      "category": "ir",
+      "source": "scripts/ir/ir-scan",
+      "sha256": "6ced57bf5e402d8f8f95ca1b959699332827afbcd9c88bab9d50e418045771eb",
+      "status": "adapted subset",
+      "note": "Tiqiaa USB raw IR learning; original Cardputer GPIO IR is not used."
+    },
+    {
+      "name": "mesh-chat",
+      "category": "mesh",
+      "source": "scripts/mesh/mesh-chat",
+      "sha256": "b00a71d629df34b6f4ff3417b10c999b06f90661ef07b2f2accba086a168c93e",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "mesh-setup",
+      "category": "mesh",
+      "source": "scripts/mesh/mesh-setup",
+      "sha256": "8c5a71a3eb9adae79417beb5159284cbc04efbfb1f1132056cc040cc70ab16cc",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "arpspoof",
+      "category": "network",
+      "source": "scripts/network/arpspoof",
+      "sha256": "a84ba360fc399d1a3a87596a7a4737450ebd441cc47caaed17fd13b87b754422",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    },
+    {
+      "name": "captive-portal",
+      "category": "network",
+      "source": "scripts/network/captive-portal",
+      "sha256": "e96662abf7961bc9b2ef455eaac0a68c47bceca2e658fbbc06e2ba9a8be71a7c",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    },
+    {
+      "name": "device-classify",
+      "category": "network",
+      "source": "scripts/network/device-classify",
+      "sha256": "30d3a0dab3bd1b753fd5998eba5687f51034f429c70572c5f329b73e033e3bb2",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "dhcp-attack",
+      "category": "network",
+      "source": "scripts/network/dhcp-attack",
+      "sha256": "ecf794181b0ffffc5c0686a84b249291e79cd770df266a0e1646bc6475807a1b",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    },
+    {
+      "name": "doh-proxy",
+      "category": "network",
+      "source": "scripts/network/doh-proxy",
+      "sha256": "0af928513ec36e0736483cb5380dae14b5defa8777bc6d1e7dae2a51f8cc7953",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "exfil-discord",
+      "category": "network",
+      "source": "scripts/network/exfil-discord",
+      "sha256": "4df6e15f2b3398df5841e766fdd3d16ae8f514a2e140711505941db80ba013aa",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    },
+    {
+      "name": "exfil-dns",
+      "category": "network",
+      "source": "scripts/network/exfil-dns",
+      "sha256": "c066a52c5816f9f694e86257478c37caeb3147c282469f75e2ae2c0aa55fc7da",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    },
+    {
+      "name": "gobuster",
+      "category": "network",
+      "source": "scripts/network/gobuster",
+      "sha256": "df01397ebb1cbe99df4c7d10f979dea7f7e03dcceed178e7e1b4cbd3ff8f6e75",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "http-probe",
+      "category": "network",
+      "source": "scripts/network/http-probe",
+      "sha256": "44c27e931bf2efd4c7342291a10b9a75b6c5643717989bad8b0ca772f3ede837",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "install_ragnar_port.sh",
+      "category": "network",
+      "source": "scripts/network/install_ragnar_port.sh",
+      "sha256": "2fc7f82f9731e87e63f338a64c4c66668163d0651bb6d43f608cbbaff0e754f1",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "iot-scan",
+      "category": "network",
+      "source": "scripts/network/iot-scan",
+      "sha256": "22360def8d618ec45e6d7eed076cdbc959f30ba7f5de42ba4d75c27a9d2f76bf",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "net-discover",
+      "category": "network",
+      "source": "scripts/network/net-discover",
+      "sha256": "f504808a7ea0082b591c6363b4c2a7e4b649e4a341b6dd6182fdd532c6cdd187",
+      "status": "adapted subset",
+      "note": "Existing authorized local-network discovery."
+    },
+    {
+      "name": "net-pivot",
+      "category": "network",
+      "source": "scripts/network/net-pivot",
+      "sha256": "905498d1a92923f63819dc370de7ed6a5d09ff9345cbfbc0445d9b0b06e63bf1",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "net-quickscan",
+      "category": "network",
+      "source": "scripts/network/net-quickscan",
+      "sha256": "4d269fb65207373d30b6579a31f52895ba3cc7a0a9fff455de41378cf58ef6f7",
+      "status": "adapted subset",
+      "note": "Existing user-confirmed target scanning; not every upstream preset."
+    },
+    {
+      "name": "net-vulnscan",
+      "category": "network",
+      "source": "scripts/network/net-vulnscan",
+      "sha256": "bd462992070442ecebffc34565c95fbbe1a4f9ed087e406e09c2156c8e74b384",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "ntlmrelayx",
+      "category": "network",
+      "source": "scripts/network/ntlmrelayx",
+      "sha256": "4969a7456c39bf46762d3ee0dd40c491d6c38b2b2bf2cbdbf65ae8d955709976",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    },
+    {
+      "name": "quick-c2",
+      "category": "network",
+      "source": "scripts/network/quick-c2",
+      "sha256": "31b078f94cf973c8ac68d9ef4294fd304a16b258f4ef2ed865282b92b885ae6a",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    },
+    {
+      "name": "ragnar-ctl",
+      "category": "network",
+      "source": "scripts/network/ragnar-ctl",
+      "sha256": "73edfb19ec8341bc3c3bdee5b3f745b494bf398a0b234d56b3792d3fa57df134",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    },
+    {
+      "name": "ragnar-scan",
+      "category": "network",
+      "source": "scripts/network/ragnar-scan",
+      "sha256": "c007ef9fc5b1fdbc5ba125b38b6bcf264fced505c545efe8501d42a587329a94",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    },
+    {
+      "name": "snmp-scan",
+      "category": "network",
+      "source": "scripts/network/snmp-scan",
+      "sha256": "4487da1d3978fb2be6a8fb7e47f21bcb4ce72dc89ed40edf2a57d60858665e83",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "threat-intel",
+      "category": "network",
+      "source": "scripts/network/threat-intel",
+      "sha256": "7b462c0b191a034ace89df51266b409b45353f5bafef74a09d987b71ab7ce1ab",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "tunnel-mgr",
+      "category": "network",
+      "source": "scripts/network/tunnel-mgr",
+      "sha256": "d7c25c26824de7e5d1d9f8adf7488408a3670cd12e155af15299f154611f6c60",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "vlan-hop",
+      "category": "network",
+      "source": "scripts/network/vlan-hop",
+      "sha256": "b5eb2cd3c0739bfc4e63ff20544668629c0160808f6df0c3869ddab0d5f67f77",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "wardrive",
+      "category": "network",
+      "source": "scripts/network/wardrive",
+      "sha256": "e86ff4e4b5ddc490c748ae45352241cf986dd893a05b2712dafdb86c7021837e",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "nfc-clone",
+      "category": "nfc",
+      "source": "scripts/nfc/nfc-clone",
+      "sha256": "f0bcd538097f53b127ece950603279fbd5405be745986581996a923e1eb8fee2",
+      "status": "excluded",
+      "note": "User explicitly excluded NFC and Sub-GHz."
+    },
+    {
+      "name": "nfc-emulate",
+      "category": "nfc",
+      "source": "scripts/nfc/nfc-emulate",
+      "sha256": "1437928a4f321ef05872a42ccdceb1dccdd4a1a897e97a28ab7dc8da0d0c106f",
+      "status": "excluded",
+      "note": "User explicitly excluded NFC and Sub-GHz."
+    },
+    {
+      "name": "nfc-read",
+      "category": "nfc",
+      "source": "scripts/nfc/nfc-read",
+      "sha256": "70eef67fbe6390cd5561d3fff223787e535f3664d5cf6da2da06677dc68f1c64",
+      "status": "excluded",
+      "note": "User explicitly excluded NFC and Sub-GHz."
+    },
+    {
+      "name": "hydra",
+      "category": "reverse",
+      "source": "scripts/reverse/hydra",
+      "sha256": "dc4c792d91dfa2e40c7f55749ab9f604df34d79f2bcdc82481f1cab1048947da",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "john",
+      "category": "reverse",
+      "source": "scripts/reverse/john",
+      "sha256": "6dec5281956ed53d00290ca171dbeb97a8709ae2b93d59b32fcb9ab92f97d63f",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "kerberoast",
+      "category": "reverse",
+      "source": "scripts/reverse/kerberoast",
+      "sha256": "481829f4732ccf7e85440d2112a60256da34fad0b31dbe5a76785a4895e50fd3",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    },
+    {
+      "name": "pass-spray",
+      "category": "reverse",
+      "source": "scripts/reverse/pass-spray",
+      "sha256": "b357d02bf23b5fab0d20030e6a94a6ecc706b64d4306b9d0a7ef909e768aabba",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    },
+    {
+      "name": "payload-craft",
+      "category": "reverse",
+      "source": "scripts/reverse/payload-craft",
+      "sha256": "5885ca407695c7777d601b7e6812cff4c745676631404aa8e60bab813559f53c",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    },
+    {
+      "name": "post-harvest",
+      "category": "reverse",
+      "source": "scripts/reverse/post-harvest",
+      "sha256": "0f0c7ecb905028e5d8d3105c1b667308117a64b31fcf86dcc78ce52549b5f7e7",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    },
+    {
+      "name": "privesc-check",
+      "category": "reverse",
+      "source": "scripts/reverse/privesc-check",
+      "sha256": "cf2d9aae1a529d20a2240ff8112abb7793f92b729980a64ec8b3a0ac52a8d7d7",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "revshell-stabilize",
+      "category": "reverse",
+      "source": "scripts/reverse/revshell-stabilize",
+      "sha256": "70474779d3619601d979df41f63e92ae99c0a0a01e61e592f72d88d77684f0c7",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "subghz-record",
+      "category": "subghz",
+      "source": "scripts/subghz/subghz-record",
+      "sha256": "8536027f5f507dda5097bf36eb124561c9c14701e4bed9e4a26717fb9f128db5",
+      "status": "excluded",
+      "note": "User explicitly excluded NFC and Sub-GHz."
+    },
+    {
+      "name": "subghz-replay",
+      "category": "subghz",
+      "source": "scripts/subghz/subghz-replay",
+      "sha256": "9ae198e1342d7e31dedccce7a93b1d0eebe34b03a8a4ffbac7898a20f3181a49",
+      "status": "excluded",
+      "note": "User explicitly excluded NFC and Sub-GHz."
+    },
+    {
+      "name": "subghz-scan",
+      "category": "subghz",
+      "source": "scripts/subghz/subghz-scan",
+      "sha256": "754fe521d785703bbb19160a54df9897962f472995bf037d64d05a1f37b836e8",
+      "status": "excluded",
+      "note": "User explicitly excluded NFC and Sub-GHz."
+    },
+    {
+      "name": "cardputer-wifi-connect",
+      "category": "system",
+      "source": "scripts/system/cardputer-wifi-connect",
+      "sha256": "5f992ff18d6ffef586a9ae7a710503bcfb979a299973c51d595432d8951ed9e0",
+      "status": "adapted subset",
+      "note": "NetworkManager controller Wi-Fi setup."
+    },
+    {
+      "name": "cardputer-wifi-setup",
+      "category": "system",
+      "source": "scripts/system/cardputer-wifi-setup",
+      "sha256": "353a1ef2b8a922d9deaf90bd5573ca3cc6e8fadef3d4396786f7cc032231382c",
+      "status": "adapted subset",
+      "note": "NetworkManager controller Wi-Fi setup."
+    },
+    {
+      "name": "cardputer-wifi-toggle",
+      "category": "system",
+      "source": "scripts/system/cardputer-wifi-toggle",
+      "sha256": "d2d7c0a32504b1f16a485dbb8b7ebf39ce07460aecec1bccd3981e8879a4065e",
+      "status": "adapted subset",
+      "note": "Allowlisted Wi-Fi enable action; USB faults are not bypassed."
+    },
+    {
+      "name": "device-lock",
+      "category": "system",
+      "source": "scripts/system/device-lock",
+      "sha256": "3e274d61fde1900c31c6e60967e832193500cef97957d836b13b5096a5cbe5ce",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "engagement-clean",
+      "category": "system",
+      "source": "scripts/system/engagement-clean",
+      "sha256": "281d0bcb5e7aad83ac138d5a52fc3f804ba21a58bf4e878caa82f0f1d7756abf",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    },
+    {
+      "name": "first-boot",
+      "category": "system",
+      "source": "scripts/system/first-boot",
+      "sha256": "1075b621b75ead50022428f0ff433fb00f5595b8ade3457f1782dd402eff14c9",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "loot-organize",
+      "category": "system",
+      "source": "scripts/system/loot-organize",
+      "sha256": "028f9eb25f5f6c5cac8a7b4e1894d20d2e5761e1bfe14874064d0a2ba7680e22",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "mac-rotate",
+      "category": "system",
+      "source": "scripts/system/mac-rotate",
+      "sha256": "bd319a3c7b622eafd323df1fcedecbf00ee689620b90579ecb915e6931468683",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "opencode-ask",
+      "category": "system",
+      "source": "scripts/system/opencode-ask",
+      "sha256": "df4abc7868b3771a1888a88d73df1210f35fb85a2040adba37d4988b2809f7d2",
+      "status": "adapted subset",
+      "note": "Cancelable quick-prompt client already deployed."
+    },
+    {
+      "name": "opencode-session",
+      "category": "system",
+      "source": "scripts/system/opencode-session",
+      "sha256": "36e9701943e0ae85c45c057a5cdadc470bfb97e3019aabccce155aa5f40dddfe",
+      "status": "implemented frontend",
+      "note": "Local interactive OpenCode PTY with 112px coding-keyboard dock; native OpenCode/provider execution still needs testing."
+    },
+    {
+      "name": "panic",
+      "category": "system",
+      "source": "scripts/system/panic",
+      "sha256": "c1d40b135396ac159448b993a14a6960e4a2e645aad6893034df0094e3a6bfb3",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    },
+    {
+      "name": "power-mode",
+      "category": "system",
+      "source": "scripts/system/power-mode",
+      "sha256": "e3f97a23c6ca4fe86b884212beac6dc0c1e5ad8d28f5f3afcf7555970de2d7f3",
+      "status": "adapted subset",
+      "note": "Existing handheld power profiles; no Pi-specific CPU hotplug copied."
+    },
+    {
+      "name": "stealth-backlight-toggle",
+      "category": "system",
+      "source": "scripts/system/stealth-backlight-toggle",
+      "sha256": "94f7c68e54b551808fdce4b4d6f0f6593a419f49f4e9fdb716903914677e6718",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "tamper-watch",
+      "category": "system",
+      "source": "scripts/system/tamper-watch",
+      "sha256": "b7916bd336b385aff450b0fe4b0e870c7905e3dbec6bcbdf45e86e786eb50832",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "usb-gadget-mode",
+      "category": "system",
+      "source": "scripts/system/usb-gadget-mode",
+      "sha256": "0378945064da0d4b56690fb656489fdad1b92192b068bb9ab1589f72555c3e17",
+      "status": "adapted subset",
+      "note": "Existing host/network-role controls; not all HID/storage modes."
+    },
+    {
+      "name": "webui",
+      "category": "system",
+      "source": "scripts/system/webui",
+      "sha256": "855ab4a76397476d86569863318f8250acc717bc5b8709998f23cc124700d320",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "webui-toggle",
+      "category": "system",
+      "source": "scripts/system/webui-toggle",
+      "sha256": "09765099b366b3ac47c9f6d24ec054f983c74422c8184e7746aa253371ed3ed3",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "zd-boot-profile",
+      "category": "system",
+      "source": "scripts/system/zd-boot-profile",
+      "sha256": "22063f683079a0558375eb5d731cc94511a527cb029ec56c797ee598d25c874c",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "zd-power",
+      "category": "system",
+      "source": "scripts/system/zd-power",
+      "sha256": "2ecde193239d9b77216c4979aeaebcdba838f6e54cf3cd8a1fe2fefe4a6219bd",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "zeroday-boot",
+      "category": "system",
+      "source": "scripts/system/zeroday-boot",
+      "sha256": "0bdede6af979adaa9a6b40924a68348a3e1725728d6690910fad6bbc30978362",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "zeroday-bootanim",
+      "category": "system",
+      "source": "scripts/system/zeroday-bootanim",
+      "sha256": "4b2737be76ef085f6127d54f14b45fb106d6d12ca75d3f2a9f263b6066797f77",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "zeroday-crypt",
+      "category": "system",
+      "source": "scripts/system/zeroday-crypt",
+      "sha256": "f7f36e39e211c6754bbbde19a05af56073044248b13fcb5589ad2346cbff6cb7",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "zeroday-secureboot",
+      "category": "system",
+      "source": "scripts/system/zeroday-secureboot",
+      "sha256": "d02f84a0453856d198b3d5b28d1880ce6bcb9be88d7a49597cd3fd2a28ea2a55",
+      "status": "hardware-dependent",
+      "note": "Cardputer/Pi assumptions do not map directly to RK3326; absent sensors/radio/display hardware are not emulated."
+    },
+    {
+      "name": "zeroday-security-check",
+      "category": "system",
+      "source": "scripts/system/zeroday-security-check",
+      "sha256": "4d82e5e80900fbd0267b997f9d4d137931a183faa0d3bed18d2b3ad244ad402a",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "wifi-autocrack",
+      "category": "wifi",
+      "source": "scripts/wifi/wifi-autocrack",
+      "sha256": "8eaf80af990c53199d02970b7fbcf057b9683d570c57c57b018f5283ecbe9700",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    },
+    {
+      "name": "wifi-crack",
+      "category": "wifi",
+      "source": "scripts/wifi/wifi-crack",
+      "sha256": "f447bf98fa7f266e7f91438c7da818c1543be7edc4a702f9767563e9b1aed44e",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "wifi-deauth",
+      "category": "wifi",
+      "source": "scripts/wifi/wifi-deauth",
+      "sha256": "14d6e75ecd1e41e746fb69d528a4b54aaed9e3f7e0bc7724c8d23e3fa700953d",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    },
+    {
+      "name": "wifi-evil-twin",
+      "category": "wifi",
+      "source": "scripts/wifi/wifi-evil-twin",
+      "sha256": "5a9bb5ad81c471fbfecbd8f1f9bb6ea2d5f335ba72afa09b69936ac31e183b4f",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    },
+    {
+      "name": "wifi-handshake",
+      "category": "wifi",
+      "source": "scripts/wifi/wifi-handshake",
+      "sha256": "b45994d68378d151fb9a2fcc7a1d3ebd8423fa114919a03acfbdbf0acbec5e3d",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "wifi-karma-ap",
+      "category": "wifi",
+      "source": "scripts/wifi/wifi-karma-ap",
+      "sha256": "50de1b4c70c99df3d8b850d5e7596f7605eb1069e82ec43954bd02bb7ddfaa74",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    },
+    {
+      "name": "wifi-monitor-toggle",
+      "category": "wifi",
+      "source": "scripts/wifi/wifi-monitor-toggle",
+      "sha256": "d4c7135e65469cbfafc6657db6a68e2142142de7eed3593b7cf1b91348f4616e",
+      "status": "adapted subset",
+      "note": "Dedicated external-adapter passive capture; restores temporary interface."
+    },
+    {
+      "name": "wifi-pmkid",
+      "category": "wifi",
+      "source": "scripts/wifi/wifi-pmkid",
+      "sha256": "097225164ac2597eb295597188b663c00fa348d5d4c69ddf830f5dbd7e615c60",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "wifi-probe-dump",
+      "category": "wifi",
+      "source": "scripts/wifi/wifi-probe-dump",
+      "sha256": "55c5ab5c645da40943ef7ad32d5bc0a835edb351fee10fea75454629a6ed2444",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "wifi-scan",
+      "category": "wifi",
+      "source": "scripts/wifi/wifi-scan",
+      "sha256": "1ea6932674e6d81e898e5ecdabeb941b501e2240813cbc9a372ea2b8ff169e9a",
+      "status": "adapted subset",
+      "note": "Controller Wi-Fi scan/connect; no hardcoded wlan0."
+    },
+    {
+      "name": "wifi-survey-log",
+      "category": "wifi",
+      "source": "scripts/wifi/wifi-survey-log",
+      "sha256": "fefea6b423e063bf322c368fc2188767c1a3983c19c9cc666d646a0c86fdd25b",
+      "status": "pending port",
+      "note": "Needs source/dependency review and a controller workflow; not installed."
+    },
+    {
+      "name": "wps-attack",
+      "category": "wifi",
+      "source": "scripts/wifi/wps-attack",
+      "sha256": "df34a1621774aa3432a632231f158910c58d4f27490793124da4c4ffc533d99c",
+      "status": "needs scoped review",
+      "note": "Not auto-installed: requires target-scoped authorization, safeguards and dependency review; no blanket attack/wipe/exfiltration automation."
+    }
+  ],
+  "upstream_menu_tools": {
+    "WIFI": [
+      {
+        "name": "Scan Networks",
+        "desc": "Quick WiFi survey (wlan0)",
+        "cmd": "sudo wifi-scan",
+        "need_root": true
+      },
+      {
+        "name": "Survey Logger",
+        "desc": "Continuous WiFi logging",
+        "cmd": "sudo wifi-survey-log",
+        "need_root": true
+      },
+      {
+        "name": "Capture Handshake",
+        "desc": "WPA handshake capture",
+        "cmd": "sudo wifi-handshake wlan1",
+        "need_root": true,
+        "args": [
+          "BSSID",
+          "CHANNEL"
+        ]
+      },
+      {
+        "name": "PMKID Capture",
+        "desc": "PMKID clientless capture",
+        "cmd": "sudo wifi-pmkid wlan1",
+        "need_root": true,
+        "args": [
+          "BSSID",
+          "CHANNEL"
+        ]
+      },
+      {
+        "name": "Deauth Attack",
+        "desc": "Deauthenticate target AP",
+        "cmd": "sudo wifi-deauth wlan1",
+        "need_root": true,
+        "args": [
+          "BSSID",
+          "CHANNEL"
+        ]
+      },
+      {
+        "name": "WPS Pixie Dust",
+        "desc": "WPS offline attack + PIN brute",
+        "cmd": "sudo wps-attack wlan1",
+        "need_root": true
+      },
+      {
+        "name": "Probe Dump",
+        "desc": "Passive MAC\u2192SSID probe map",
+        "cmd": "sudo wifi-probe-dump wlan1 60",
+        "need_root": true
+      },
+      {
+        "name": "Karma AP",
+        "desc": "Clone most-probed SSID rogue AP",
+        "cmd": "sudo wifi-karma-ap wlan1 wlan0",
+        "need_root": true
+      },
+      {
+        "name": "Evil Twin",
+        "desc": "Rogue AP with captive portal",
+        "cmd": "sudo wifi-evil-twin",
+        "need_root": true,
+        "args": [
+          "AP_IFACE",
+          "INET_IFACE",
+          "ESSID"
+        ]
+      },
+      {
+        "name": "Crack Handshake",
+        "desc": "Crack .cap (4-tier: defaults\u2192rockyou)",
+        "cmd": "wifi-autocrack",
+        "need_root": false,
+        "args": [
+          "CAP_FILE"
+        ]
+      },
+      {
+        "name": "Monitor Toggle",
+        "desc": "Toggle managed/monitor mode",
+        "cmd": "sudo wifi-monitor-toggle",
+        "need_root": true
+      },
+      {
+        "name": "MAC Rotate",
+        "desc": "Randomize MAC address",
+        "cmd": "sudo mac-rotate wlan0",
+        "need_root": true
+      },
+      {
+        "name": "Dongle Monitor",
+        "desc": "RTL8821CU \u2192 monitor mode",
+        "cmd": "sudo dongle-setup monitor",
+        "need_root": true
+      },
+      {
+        "name": "Dongle Managed",
+        "desc": "RTL8821CU \u2192 managed mode",
+        "cmd": "sudo dongle-setup managed",
+        "need_root": true
+      }
+    ],
+    "M5MONSTER": [
+      {
+        "name": "Hub Status",
+        "desc": "Show Grove topology + status",
+        "cmd": "monsterctl hub_status",
+        "need_root": false
+      },
+      {
+        "name": "Detect Board",
+        "desc": "Ping MonsterC5 board",
+        "cmd": "monsterctl status",
+        "need_root": false
+      },
+      {
+        "name": "Scan Networks",
+        "desc": "WiFi scan via ESP32C5",
+        "cmd": "sudo monsterctl scan",
+        "need_root": true
+      },
+      {
+        "name": "Deauth Attack",
+        "desc": "Deauthenticate selected APs",
+        "cmd": "sudo monsterctl deauth",
+        "need_root": true
+      },
+      {
+        "name": "Evil Twin",
+        "desc": "Rogue AP + captive portal",
+        "cmd": "sudo monsterctl evil_twin",
+        "need_root": true
+      },
+      {
+        "name": "WPA3 SAE Overflow",
+        "desc": "SAE commit flood DoS attack",
+        "cmd": "sudo monsterctl sae_overflow",
+        "need_root": true
+      },
+      {
+        "name": "Handshake Capture",
+        "desc": "Capture 4-way handshake",
+        "cmd": "sudo monsterctl handshake",
+        "need_root": true
+      },
+      {
+        "name": "Karma Attack",
+        "desc": "Respond to probe requests",
+        "cmd": "sudo monsterctl karma",
+        "need_root": true,
+        "args": [
+          "PROBE_N"
+        ]
+      },
+      {
+        "name": "Wardrive",
+        "desc": "GPS-tagged WiFi scan",
+        "cmd": "sudo monsterctl wardrive",
+        "need_root": true
+      },
+      {
+        "name": "Sniffer",
+        "desc": "WiFi packet sniffer",
+        "cmd": "sudo monsterctl sniffer",
+        "need_root": true
+      },
+      {
+        "name": "GPS Passthrough",
+        "desc": "Stream GPS NMEA data",
+        "cmd": "monsterctl gps_passthrough",
+        "need_root": false
+      },
+      {
+        "name": "C6L Zigbee Scan",
+        "desc": "Zigbee scan via C6L",
+        "cmd": "c6l-ctl zigbee scan",
+        "need_root": false
+      },
+      {
+        "name": "C6L BLE Scan",
+        "desc": "BLE scan via C6L",
+        "cmd": "c6l-ctl ble scan",
+        "need_root": false
+      },
+      {
+        "name": "Mesh Start",
+        "desc": "Start Meshtastic node",
+        "cmd": "monsterctl mesh start",
+        "need_root": false
+      },
+      {
+        "name": "Mesh Send",
+        "desc": "Send mesh message",
+        "cmd": "monsterctl mesh send",
+        "need_root": false,
+        "args": [
+          "DEST",
+          "MSG"
+        ]
+      },
+      {
+        "name": "Stop Attack",
+        "desc": "Stop current MonsterC5 attack",
+        "cmd": "monsterctl stop",
+        "need_root": false
+      },
+      {
+        "name": "Flash ZERO-DAY",
+        "desc": "Flash custom firmware",
+        "cmd": "sudo monsterctl flash local",
+        "need_root": true
+      }
+    ],
+    "NET": [
+      {
+        "name": "Discover Hosts",
+        "desc": "ARP scan + ping sweep",
+        "cmd": "sudo net-discover eth0",
+        "need_root": true,
+        "args": [
+          "SUBNET"
+        ]
+      },
+      {
+        "name": "Quick Scan",
+        "desc": "Nmap top 100 ports",
+        "cmd": "net-quickscan",
+        "need_root": false,
+        "args": [
+          "TARGET"
+        ]
+      },
+      {
+        "name": "Web Scan",
+        "desc": "Nmap web ports + scripts",
+        "cmd": "net-quickscan",
+        "need_root": false,
+        "args": [
+          "TARGET"
+        ],
+        "extra": "web"
+      },
+      {
+        "name": "Vuln Scan",
+        "desc": "Nmap vuln + nikto + whatweb",
+        "cmd": "sudo net-vulnscan",
+        "need_root": true,
+        "args": [
+          "TARGET"
+        ]
+      },
+      {
+        "name": "Full Scan",
+        "desc": "All 65535 ports + scripts",
+        "cmd": "net-quickscan",
+        "need_root": false,
+        "args": [
+          "TARGET"
+        ],
+        "extra": "full"
+      },
+      {
+        "name": "IoT Scan",
+        "desc": "IoT protocol discovery",
+        "cmd": "iot-scan",
+        "need_root": false,
+        "args": [
+          "TARGET"
+        ]
+      },
+      {
+        "name": "Gobuster",
+        "desc": "Directory/DNS brute-forcer",
+        "cmd": "gobuster dir",
+        "need_root": false,
+        "args": [
+          "TARGET"
+        ]
+      },
+      {
+        "name": "Pivot (SOCKS)",
+        "desc": "SOCKS proxy via SSH",
+        "cmd": "tunnel-mgr socks",
+        "need_root": false,
+        "args": [
+          "TARGET"
+        ]
+      },
+      {
+        "name": "Pivot (Forward)",
+        "desc": "Local port forward",
+        "cmd": "tunnel-mgr forward",
+        "need_root": false
+      },
+      {
+        "name": "C2 Listener",
+        "desc": "Encrypted C2 shell (socat)",
+        "cmd": "quick-c2 listen",
+        "need_root": false,
+        "args": [
+          "PORT"
+        ]
+      },
+      {
+        "name": "C2 Payloads",
+        "desc": "Generate shell one-liners",
+        "cmd": "quick-c2 payload",
+        "need_root": false
+      },
+      {
+        "name": "DoH Proxy",
+        "desc": "DNS-over-HTTPS tunnel",
+        "cmd": "doh-proxy start",
+        "need_root": true
+      },
+      {
+        "name": "ARP Spoof",
+        "desc": "MITM via arp spoofing",
+        "cmd": "sudo arpspoof start",
+        "need_root": true,
+        "args": [
+          "TARGET",
+          "GATEWAY"
+        ]
+      },
+      {
+        "name": "VLAN Hop",
+        "desc": "VLAN hopping: double-tag + DTP",
+        "cmd": "sudo vlan-hop detect eth0",
+        "need_root": true
+      },
+      {
+        "name": "DHCP Starve",
+        "desc": "Exhaust DHCP pool (random MACs)",
+        "cmd": "sudo dhcp-attack starve eth0",
+        "need_root": true
+      },
+      {
+        "name": "DHCP Snoop",
+        "desc": "Passive client/hostname map",
+        "cmd": "sudo dhcp-attack snoop eth0",
+        "need_root": true
+      },
+      {
+        "name": "SNMP Scan",
+        "desc": "Community brute + MIB walk",
+        "cmd": "sudo snmp-scan auto",
+        "need_root": true
+      },
+      {
+        "name": "HTTP Probe",
+        "desc": "Find web services + juicy paths",
+        "cmd": "http-probe",
+        "need_root": false,
+        "args": [
+          "TARGET"
+        ]
+      },
+      {
+        "name": "HTTP Probe Auto",
+        "desc": "Auto-discover from last nmap scan",
+        "cmd": "http-probe auto",
+        "need_root": false
+      },
+      {
+        "name": "Wardrive",
+        "desc": "GPS-tagged WiFi scanning + KML",
+        "cmd": "wardrive start wlan0",
+        "need_root": false
+      },
+      {
+        "name": "Captive Portal",
+        "desc": "Rogue AP + credential harvesting",
+        "cmd": "sudo captive-portal start",
+        "need_root": true,
+        "args": [
+          "AP_IFACE",
+          "INET_IFACE",
+          "ESSID"
+        ]
+      },
+      {
+        "name": "DNS Exfil",
+        "desc": "Exfiltrate data via DNS tunnel",
+        "cmd": "exfil-dns",
+        "need_root": true
+      },
+      {
+        "name": "ICMP Tunnel",
+        "desc": "Covert C2 via ICMP",
+        "cmd": "tunnel-mgr icmp",
+        "need_root": true
+      },
+      {
+        "name": "NTLM Relay",
+        "desc": "NTLM authentication relay attack",
+        "cmd": "ntlmrelayx",
+        "need_root": true
+      }
+    ],
+    "BT": [
+      {
+        "name": "Scan Devices",
+        "desc": "BLE + Classic discovery",
+        "cmd": "sudo bt-scan",
+        "need_root": true
+      },
+      {
+        "name": "Deep Enumerate",
+        "desc": "Name, class, SDP, LMP",
+        "cmd": "sudo bt-deep",
+        "need_root": true,
+        "args": [
+          "MAC"
+        ]
+      },
+      {
+        "name": "BlueBorne Test",
+        "desc": "Test BlueBorne vulnerability",
+        "cmd": "sudo bt-attack blueborne",
+        "need_root": true,
+        "args": [
+          "MAC"
+        ]
+      },
+      {
+        "name": "L2Ping Flood",
+        "desc": "L2CAP ping flood (DoS)",
+        "cmd": "sudo bt-attack l2ping_flood",
+        "need_root": true,
+        "args": [
+          "MAC"
+        ]
+      },
+      {
+        "name": "RFCOMM Scan",
+        "desc": "Scan RFCOMM channels",
+        "cmd": "sudo bt-attack rfcomm_scan",
+        "need_root": true,
+        "args": [
+          "MAC"
+        ]
+      },
+      {
+        "name": "GATT Enumerate",
+        "desc": "BLE services + handles",
+        "cmd": "sudo ble-gatt",
+        "need_root": true,
+        "args": [
+          "MAC"
+        ]
+      },
+      {
+        "name": "Bettercap",
+        "desc": "MITM + BLE attack framework",
+        "cmd": "sudo bettercap mitm",
+        "need_root": true,
+        "args": [
+          "IFACE"
+        ]
+      },
+      {
+        "name": "BLE Spam Samsung",
+        "desc": "Wall of Flippers: Samsung TV",
+        "cmd": "sudo ble-spam samsung_tv",
+        "need_root": true
+      },
+      {
+        "name": "BLE Spam Swift",
+        "desc": "Wall of Flippers: Swift Pair",
+        "cmd": "sudo ble-spam swift_pair",
+        "need_root": true
+      },
+      {
+        "name": "BLE Spam AirPods",
+        "desc": "Wall of Flippers: AirPods",
+        "cmd": "sudo ble-spam air_pod",
+        "need_root": true
+      },
+      {
+        "name": "BLE Spam All",
+        "desc": "Wall of Flippers: cycle all",
+        "cmd": "sudo ble-spam all",
+        "need_root": true
+      }
+    ],
+    "IR": [
+      {
+        "name": "Scan IR Signal",
+        "desc": "Capture remote control signals",
+        "cmd": "sudo ir-scan",
+        "need_root": true
+      },
+      {
+        "name": "Replay Signal",
+        "desc": "Replay captured IR signal",
+        "cmd": "sudo ir-replay",
+        "need_root": true,
+        "args": [
+          "FILE"
+        ]
+      },
+      {
+        "name": "Brute Force TV",
+        "desc": "TV power codes (NEC protocol)",
+        "cmd": "sudo ir-brute nec tv",
+        "need_root": true
+      },
+      {
+        "name": "Brute Force AC",
+        "desc": "AC power codes brute force",
+        "cmd": "sudo ir-brute nec ac",
+        "need_root": true
+      }
+    ],
+    "CAM": [
+      {
+        "name": "Snap Photo",
+        "desc": "Capture still image from camera",
+        "cmd": "cam-snap",
+        "need_root": false
+      },
+      {
+        "name": "Record Video",
+        "desc": "Record video clip",
+        "cmd": "cam-stream",
+        "need_root": false,
+        "args": [
+          "DURATION"
+        ]
+      },
+      {
+        "name": "OCR Capture",
+        "desc": "Photo + text recognition",
+        "cmd": "cam-ocr",
+        "need_root": false
+      }
+    ],
+    "PAYLD": [
+      {
+        "name": "C2 Listener",
+        "desc": "Encrypted C2 shell (socat)",
+        "cmd": "quick-c2 listen",
+        "need_root": false,
+        "args": [
+          "PORT"
+        ]
+      },
+      {
+        "name": "C2 Payloads",
+        "desc": "Generate shell one-liners",
+        "cmd": "quick-c2 payload",
+        "need_root": false
+      },
+      {
+        "name": "Stabilize Shell",
+        "desc": "PTY/TTY upgrade cheatsheet",
+        "cmd": "revshell-stabilize",
+        "need_root": false
+      },
+      {
+        "name": "Crack Hashes",
+        "desc": "John the Ripper password cracker",
+        "cmd": "john hash",
+        "need_root": false,
+        "args": [
+          "HASHFILE"
+        ]
+      },
+      {
+        "name": "Crack WiFi .cap",
+        "desc": "Tiered auto-crack: defaults\u2192rockyou\u2192rules\u2192mask",
+        "cmd": "wifi-autocrack crack",
+        "need_root": false,
+        "args": [
+          "CAP_FILE"
+        ]
+      },
+      {
+        "name": "Pass Spray SSH",
+        "desc": "Lockout-safe password spray",
+        "cmd": "pass-spray ssh",
+        "need_root": false,
+        "args": [
+          "TARGET"
+        ]
+      },
+      {
+        "name": "Pass Spray SMB",
+        "desc": "SMB/NTLM password spray",
+        "cmd": "pass-spray smb",
+        "need_root": false,
+        "args": [
+          "TARGET"
+        ]
+      },
+      {
+        "name": "Pass Spray Auto",
+        "desc": "Spray all discovered services",
+        "cmd": "pass-spray auto",
+        "need_root": false
+      },
+      {
+        "name": "Kerberoast",
+        "desc": "TGS/AS-REP hash extraction",
+        "cmd": "kerberoast auto",
+        "need_root": false,
+        "args": [
+          "TARGET"
+        ]
+      },
+      {
+        "name": "Engagement Clean",
+        "desc": "Wipe forensic artifacts (opsec)",
+        "cmd": "sudo engagement-clean select",
+        "need_root": true
+      },
+      {
+        "name": "Post Harvest",
+        "desc": "Grab SSH keys, creds, history",
+        "cmd": "post-harvest all",
+        "need_root": false
+      },
+      {
+        "name": "Brute Force Creds",
+        "desc": "Hydra online credential cracker",
+        "cmd": "hydra ssh",
+        "need_root": false,
+        "args": [
+          "TARGET"
+        ]
+      },
+      {
+        "name": "USB Ducky Mode",
+        "desc": "Switch USB-C to HID keyboard",
+        "cmd": "sudo usb-gadget-mode hid",
+        "need_root": true
+      },
+      {
+        "name": "USB Mass Storage",
+        "desc": "Switch USB-C to flash drive",
+        "cmd": "sudo usb-gadget-mode mass",
+        "need_root": true
+      },
+      {
+        "name": "USB Network",
+        "desc": "Switch USB-C to network adapter",
+        "cmd": "sudo usb-gadget-mode ncm",
+        "need_root": true
+      },
+      {
+        "name": "Ragnar Scan",
+        "desc": "Autonomous network scanner (web)",
+        "cmd": "ragnar-ctl start",
+        "need_root": false
+      },
+      {
+        "name": "Ragnar Status",
+        "desc": "Scanner status + dashboard URL",
+        "cmd": "ragnar-ctl status",
+        "need_root": false
+      },
+      {
+        "name": "Ragnar Vuln",
+        "desc": "Trigger vulnerability scan",
+        "cmd": "ragnar-ctl vuln",
+        "need_root": false
+      }
+    ],
+    "RADIO": [
+      {
+        "name": "Wi-Fi Walkie Talkie",
+        "desc": "Local Push-To-Talk Radio",
+        "cmd": "WALKIE_TALKIE",
+        "need_root": false
+      },
+      {
+        "name": "Mesh Chat",
+        "desc": "Interactive LoRa mesh chat",
+        "cmd": "mesh-chat chat",
+        "need_root": false
+      },
+      {
+        "name": "Mesh Listen",
+        "desc": "Listen to mesh messages",
+        "cmd": "mesh-chat listen",
+        "need_root": false
+      },
+      {
+        "name": "Mesh Nodes",
+        "desc": "List discovered mesh nodes",
+        "cmd": "mesh-chat nodes",
+        "need_root": false
+      },
+      {
+        "name": "SDR Scan",
+        "desc": "Frequency sweep via RTL-SDR",
+        "cmd": "sudo sdr-scan",
+        "need_root": true,
+        "args": [
+          "FREQ_RANGE"
+        ]
+      },
+      {
+        "name": "RF Capture",
+        "desc": "Raw IQ signal capture",
+        "cmd": "sudo rf-capture",
+        "need_root": true,
+        "args": [
+          "FREQ"
+        ]
+      },
+      {
+        "name": "GPIO Probe",
+        "desc": "Enumerate I2C/SPI/UART devices",
+        "cmd": "sudo gpio-probe",
+        "need_root": true
+      }
+    ],
+    "MEDIA": [
+      {
+        "name": "Danish WebRadio",
+        "desc": "Stream Danish Radio Channels",
+        "cmd": "MEDIA_PLAYER:RADIO",
+        "need_root": false
+      },
+      {
+        "name": "Local Music",
+        "desc": "Play MP3s from /opt/cardputer",
+        "cmd": "MEDIA_PLAYER:MUSIC",
+        "need_root": false
+      },
+      {
+        "name": "Stop Playback",
+        "desc": "Kill audio background process",
+        "cmd": "killall ffplay",
+        "need_root": false
+      }
+    ],
+    "YT": [
+      {
+        "name": "Search YouTube",
+        "desc": "Search and play YouTube videos",
+        "cmd": "yt search",
+        "need_root": false
+      },
+      {
+        "name": "Play Video",
+        "desc": "Play YouTube video by URL/ID",
+        "cmd": "yt play",
+        "need_root": false,
+        "args": [
+          "URL_OR_ID"
+        ]
+      },
+      {
+        "name": "Play Audio Only",
+        "desc": "YouTube audio only (saves battery)",
+        "cmd": "yt audio",
+        "need_root": false,
+        "args": [
+          "URL_OR_ID"
+        ]
+      },
+      {
+        "name": "Download Video",
+        "desc": "Download video to SD card",
+        "cmd": "yt download",
+        "need_root": false,
+        "args": [
+          "URL_OR_ID"
+        ]
+      },
+      {
+        "name": "Download Audio",
+        "desc": "Download audio (MP3/OPUS)",
+        "cmd": "yt download-audio",
+        "need_root": false,
+        "args": [
+          "URL_OR_ID"
+        ]
+      },
+      {
+        "name": "Trending",
+        "desc": "Browse trending videos",
+        "cmd": "yt trending",
+        "need_root": false
+      },
+      {
+        "name": "Play History",
+        "desc": "Show recently played videos",
+        "cmd": "yt history",
+        "need_root": false
+      }
+    ],
+    "GAMES": [
+      {
+        "name": "Play DOOM",
+        "desc": "Launch DOOM (shareware/free)",
+        "cmd": "doom-play play",
+        "need_root": false
+      },
+      {
+        "name": "DOOM Shareware",
+        "desc": "Download DOOM shareware WAD",
+        "cmd": "doom-play shareware",
+        "need_root": false
+      },
+      {
+        "name": "List WADs",
+        "desc": "List installed DOOM WAD files",
+        "cmd": "doom-play list",
+        "need_root": false
+      }
+    ],
+    "RETRO": [
+      {
+        "name": "Retro Game Picker",
+        "desc": "Interactive retro game selector",
+        "cmd": "retro-play",
+        "need_root": false
+      },
+      {
+        "name": "NES",
+        "desc": "Nintendo Entertainment System",
+        "cmd": "retro-play nes",
+        "need_root": false,
+        "args": [
+          "ROM"
+        ]
+      },
+      {
+        "name": "SNES",
+        "desc": "Super Nintendo",
+        "cmd": "retro-play snes",
+        "need_root": false,
+        "args": [
+          "ROM"
+        ]
+      },
+      {
+        "name": "Game Boy",
+        "desc": "Nintendo Game Boy",
+        "cmd": "retro-play gb",
+        "need_root": false,
+        "args": [
+          "ROM"
+        ]
+      },
+      {
+        "name": "GBA",
+        "desc": "Game Boy Advance",
+        "cmd": "retro-play gba",
+        "need_root": false,
+        "args": [
+          "ROM"
+        ]
+      },
+      {
+        "name": "Genesis",
+        "desc": "Sega Genesis / Mega Drive",
+        "cmd": "retro-play genesis",
+        "need_root": false,
+        "args": [
+          "ROM"
+        ]
+      },
+      {
+        "name": "List ROMs",
+        "desc": "List available game ROMs",
+        "cmd": "retro-play list",
+        "need_root": false
+      },
+      {
+        "name": "Check Cores",
+        "desc": "Check installed emulator cores",
+        "cmd": "retro-play cores",
+        "need_root": false
+      },
+      {
+        "name": "Setup RetroArch",
+        "desc": "Configure RetroArch for LCD",
+        "cmd": "retro-play setup",
+        "need_root": true
+      }
+    ],
+    "SHELL": [
+      {
+        "name": "Quick Terminal",
+        "desc": "Open bash shell",
+        "cmd": "bash",
+        "need_root": false
+      },
+      {
+        "name": "Root Terminal",
+        "desc": "Open root shell",
+        "cmd": "sudo bash",
+        "need_root": true
+      },
+      {
+        "name": "OpenCode",
+        "desc": "AI-assisted code editor",
+        "cmd": "opencode-session",
+        "need_root": false
+      },
+      {
+        "name": "WiFi Setup",
+        "desc": "Configure WiFi connection",
+        "cmd": "sudo cardputer-wifi-setup",
+        "need_root": true
+      },
+      {
+        "name": "WiFi Toggle",
+        "desc": "Toggle wlan0 on/off",
+        "cmd": "sudo cardputer-wifi-toggle",
+        "need_root": true
+      }
+    ],
+    "SYS": [
+      {
+        "name": "Trail Navigation",
+        "desc": "Breadcrumb nav + exit guidance",
+        "cmd": "trail-tui",
+        "need_root": false
+      },
+      {
+        "name": "WiFi Dashboard",
+        "desc": "Scan/wardrive/attacks TUI",
+        "cmd": "wifi-tui",
+        "need_root": true
+      },
+      {
+        "name": "Bluetooth Dashboard",
+        "desc": "BT/BLE scan + GATT + attacks",
+        "cmd": "bt-tui",
+        "need_root": true
+      },
+      {
+        "name": "System Monitor",
+        "desc": "CPU/RAM/batt/temp/processes live",
+        "cmd": "sys-tui",
+        "need_root": false
+      },
+      {
+        "name": "Net Dashboard",
+        "desc": "Live host/port table from scans",
+        "cmd": "net-tui",
+        "need_root": false
+      },
+      {
+        "name": "Loot Browser",
+        "desc": "Browse loot with file preview",
+        "cmd": "loot-tui",
+        "need_root": false
+      },
+      {
+        "name": "Scan Dashboard",
+        "desc": "Live nmap/ragnar-scan TUI",
+        "cmd": "scan-tui",
+        "need_root": false
+      },
+      {
+        "name": "Battery Status",
+        "desc": "Show battery level + voltage",
+        "cmd": "cardputer-battery",
+        "need_root": false
+      },
+      {
+        "name": "MonsterC5 Status",
+        "desc": "Check MonsterC5 connection",
+        "cmd": "monsterctl status",
+        "need_root": false
+      },
+      {
+        "name": "Dongle Status",
+        "desc": "RTL8821CU dongle manager",
+        "cmd": "dongle-setup status",
+        "need_root": false
+      },
+      {
+        "name": "MAC Rotate",
+        "desc": "Randomize MAC address",
+        "cmd": "sudo mac-rotate wlan0",
+        "need_root": true
+      },
+      {
+        "name": "Performance Mode",
+        "desc": "1GHz quad, all radios on",
+        "cmd": "sudo power-mode performance",
+        "need_root": true
+      },
+      {
+        "name": "Balanced Mode",
+        "desc": "800MHz dual, WiFi only",
+        "cmd": "sudo power-mode balanced",
+        "need_root": true
+      },
+      {
+        "name": "Stealth Mode",
+        "desc": "600MHz single, radios off",
+        "cmd": "sudo power-mode stealth",
+        "need_root": true
+      },
+      {
+        "name": "Loot Organize",
+        "desc": "Sort and compress captures",
+        "cmd": "loot-organize",
+        "need_root": false
+      },
+      {
+        "name": "DoH Proxy",
+        "desc": "DNS-over-HTTPS tunnel",
+        "cmd": "doh-proxy start",
+        "need_root": true
+      },
+      {
+        "name": "Device Lock",
+        "desc": "Lock screen (PIN/sequence)",
+        "cmd": "device-lock lock",
+        "need_root": false
+      },
+      {
+        "name": "WebUI Dashboard",
+        "desc": "Phone/laptop remote control",
+        "cmd": "webui",
+        "need_root": false
+      },
+      {
+        "name": "Discord Exfil",
+        "desc": "Send loot/data to Discord",
+        "cmd": "exfil-discord status",
+        "need_root": false
+      },
+      {
+        "name": "PANIC",
+        "desc": "Kill all + wipe + sanitize",
+        "cmd": "panic",
+        "need_root": false
+      },
+      {
+        "name": "System Info",
+        "desc": "Show OS + hardware info",
+        "cmd": "cat /etc/zeroday-release; uname -a; free -m; df -h /",
+        "need_root": false
+      }
+    ],
+    "OPENCODE": [
+      {
+        "name": "Open Code Editor",
+        "desc": "Launch OpenCode IDE",
+        "cmd": "opencode-session",
+        "need_root": false
+      },
+      {
+        "name": "Open Workspace",
+        "desc": "OpenCode in /opt/cardputer",
+        "cmd": "opencode-session /opt/cardputer",
+        "need_root": false
+      },
+      {
+        "name": "Open Loot Dir",
+        "desc": "OpenCode in loot directory",
+        "cmd": "opencode-session /opt/cardputer/loot",
+        "need_root": false
+      },
+      {
+        "name": "Open Config Dir",
+        "desc": "OpenCode in config directory",
+        "cmd": "opencode-session /opt/cardputer/config",
+        "need_root": false
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "compositor",
+      "source": "compositor/src",
+      "status": "pending architecture-specific port"
+    },
+    {
+      "name": "terminal",
+      "source": "terminal/src",
+      "status": "pending architecture-specific port"
+    },
+    {
+      "name": "explorer",
+      "source": "explorer/src",
+      "status": "pending architecture-specific port"
+    },
+    {
+      "name": "trail",
+      "source": "trail/src",
+      "status": "pending architecture-specific port"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+#!/bin/bash
+
+set -euo pipefail
+
+[ ! -e /run/gamehack-sd2-ejected ] || exit 0
+
+mountpoint -q /data/external || install -d -o hacker -g hacker -m 0750 /data/external
+mountpoint -q /data/debug || install -d -o root -g root -m 0755 /data/debug
+# Mount only the explicitly prepared SD2 partitions. Missing cards never wait
+# for a device or block boot. The periodic diagnostic service retries later.
+mount_sd2() {
+  local uuid="$1" target="$2" options="$3"
+  local device="/dev/disk/by-uuid/$uuid"
+  [ -b "$device" ] || return 0
+  if mountpoint -q "$target"; then
+    [ "$(findmnt -n -o UUID --target "$target")" = "$uuid" ] || echo "SD2: $target occupied by another filesystem" >&2
+    return 0
+  fi
+  timeout 10 mount -o "$options" "$device" "$target" || { echo "SD2: mount failed for $target" >&2; return 0; }
+}
+mount_sd2 83809ff4-9ea9-46b0-bec0-14b719a09e61 /data/debug nosuid,nodev,noexec
+mount_sd2 7ACB-F55A /data/external nosuid,nodev,noexec,uid=1000,gid=1000,umask=0077
+mount_sd2 db0e4472-ba23-4523-9b61-2f9694211ce4 /data/debug nosuid,nodev,noexec
+mount_sd2 6ADB-B468 /data/external nosuid,nodev,noexec,uid=1000,gid=1000,umask=0077
+if [ -b /dev/disk/by-uuid/7ACB-F55A ] || [ -b /dev/disk/by-uuid/6ADB-B468 ]; then
+  exit 0
+fi
+root_source="$(findmnt -n -o SOURCE /)"
+for device in /dev/mmcblk*p*; do
+  [ -b "$device" ] || continue
+  [ "$device" = "$root_source" ] && continue
+  label="$(blkid -s LABEL -o value "$device" 2>/dev/null || true)"
+  case "$label" in
+    GAMEHACKDATA|HACKERDATA|GAMES)
+      mountpoint -q /data/external || mount -o nosuid,nodev "$device" /data/external
+      chown hacker:hacker /data/external || true
+      exit 0
+      ;;
+  esac
+done
+exit 0

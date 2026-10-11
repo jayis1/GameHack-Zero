@@ -1,0 +1,3 @@
+# NetworkManager sets wifi.powersave=2 for detected Wi-Fi interfaces.
+# Do not run iw against wlan0 during udev add: predictable naming may have
+# already renamed it to wlx..., and udev is not the radio-state manager.

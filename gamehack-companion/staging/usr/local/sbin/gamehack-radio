@@ -1,0 +1,198 @@
+#!/usr/bin/python3
+"""Allowlisted radio inspection/discovery and bounded passive Wi-Fi capture."""
+import json
+import os
+import pwd
+import re
+import signal
+import subprocess
+import sys
+import tempfile
+from contextlib import contextmanager
+from pathlib import Path
+
+
+def run(args, timeout=15):
+    result = subprocess.run(args, capture_output=True, text=True, timeout=timeout)
+    if result.returncode:
+        raise ValueError((result.stderr or result.stdout).strip())
+    return result.stdout
+
+
+def interface(name):
+    if not re.fullmatch(r'[A-Za-z0-9_.-]{1,15}', name):
+        raise ValueError('Invalid interface')
+    phy = Path('/sys/class/net', name, 'phy80211')
+    if not phy.exists():
+        raise ValueError('Not a wireless interface')
+    return phy.resolve().name
+
+
+def rfkill_states(root=Path('/sys/class/rfkill')):
+    states = []
+    for device in sorted(root.glob('rfkill*')):
+        if not re.fullmatch(r'rfkill\d+', device.name):
+            continue
+        states.append({'id': device.name[6:], 'type': (device / 'type').read_text().strip(),
+                       'name': (device / 'name').read_text().strip(),
+                       'soft': (device / 'soft').read_text().strip() == '1',
+                       'hard': (device / 'hard').read_text().strip() == '1'})
+    return states
+
+
+@contextmanager
+def radio_available(kind, phy=None):
+    selected = [item for item in rfkill_states() if item['type'] == kind and (phy is None or item['name'] == phy)]
+    if phy is None and len(selected) > 1:
+        raise ValueError('Multiple Bluetooth radios found; explicit controller selection is required')
+    if any(item['hard'] for item in selected):
+        raise ValueError('Radio is hardware-blocked; software cannot unblock it')
+    changed = []
+    try:
+        for item in selected:
+            if item['soft']:
+                run(['rfkill', 'unblock', item['id']])
+                changed.append(item['id'])
+        yield
+    finally:
+        for identifier in changed:
+            run(['rfkill', 'block', identifier])
+
+
+def radios():
+    devices = []
+    for device in Path('/sys/class/net').iterdir():
+        if not (device / 'phy80211').exists():
+            continue
+        phy = interface(device.name)
+        info = run(['iw', 'phy', phy, 'info'])
+        driver = (device / 'device/driver').resolve().name
+        devices.append({'interface': device.name, 'phy': phy, 'driver': driver,
+                        'monitor_supported': bool(re.search(r'^\s*\* monitor\s*$', info, re.M))})
+    return devices
+
+
+def validate_capture(name, frequency, bssid, seconds):
+    if not re.fullmatch(r'[A-Za-z0-9_.-]{1,15}', name):
+        raise ValueError('Invalid interface')
+    if not 2400 <= frequency <= 5900 or not 1 <= seconds <= 30:
+        raise ValueError('Capture frequency/duration out of bounds (max 30s)')
+    if not re.fullmatch(r'(?:[0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2}', bssid) or int(bssid[:2], 16) & 1:
+        raise ValueError('Invalid unicast access point BSSID')
+
+
+def output_file():
+    account = pwd.getpwnam('companion')
+    uid, gid, groups = os.geteuid(), os.getegid(), os.getgroups()
+    try:
+        os.setgroups([account.pw_gid])
+        os.setegid(account.pw_gid)
+        os.seteuid(account.pw_uid)
+        folder = Path('/home/companion/shared/captures')
+        folder.mkdir(mode=0o700, parents=True, exist_ok=True)
+        return tempfile.mkstemp(prefix='wifi-', suffix='.pcap', dir=folder)
+    finally:
+        os.seteuid(uid)
+        os.setegid(gid)
+        os.setgroups(groups)
+
+
+def capture(name, frequency, bssid, seconds):
+    validate_capture(name, frequency, bssid, seconds)
+    device = next((item for item in radios() if item['interface'] == name), None)
+    if not device or not device['monitor_supported']:
+        raise ValueError('Stock driver does not advertise monitor support; no unsupported firmware is forced.')
+    with radio_available('wlan', device['phy']):
+        _capture(name, frequency, bssid, seconds)
+
+
+def _capture(name, frequency, bssid, seconds):
+    validate_capture(name, frequency, bssid, seconds)
+    device = next((radio for radio in radios() if radio['interface'] == name), None)
+    if not device or not device['monitor_supported']:
+        raise ValueError('Stock driver does not advertise monitor support. Pi Zero W built-in brcmfmac generally needs a compatible external radio or separately validated firmware.')
+    state = run(['nmcli', '-g', 'GENERAL.STATE', 'dev', 'show', name])
+    match = re.match(r'(\d+)', state)
+    if not match or 40 <= int(match[1]) <= 100:
+        raise ValueError('Disconnect this Pi radio from Wi-Fi before capture; control remains over USB.')
+    mon = 'ghpimon0'
+    if Path('/sys/class/net', mon).exists():
+        raise ValueError('Monitor interface already exists')
+    created, fd = False, None
+    try:
+        run(['iw', 'phy', device['phy'], 'interface', 'add', mon, 'type', 'monitor'])
+        created = True
+        run(['nmcli', 'dev', 'set', mon, 'managed', 'no'])
+        run(['ip', 'link', 'set', mon, 'up'])
+        run(['iw', 'dev', mon, 'set', 'freq', str(frequency)])
+        fd, filename = output_file()
+        expression = f'wlan addr1 {bssid} or wlan addr2 {bssid} or wlan addr3 {bssid}'
+        try:
+            result = subprocess.run(['tcpdump', '-Z', 'companion', '-i', mon, '-U', '-s', '128', '-c', '1000', '-w', '-', expression], stdout=fd, stderr=subprocess.PIPE, text=True, timeout=seconds)
+            if result.returncode:
+                raise ValueError(result.stderr.strip())
+        except subprocess.TimeoutExpired:
+            pass
+        print(json.dumps({'capture': filename, 'bssid': bssid, 'seconds': seconds, 'passive': True}))
+    finally:
+        if fd is not None:
+            os.close(fd)
+        if created:
+            run(['iw', 'dev', mon, 'del'])
+
+
+def bluetooth_scan(seconds):
+    status = run(['bluetoothctl', 'show'])
+    if 'Discovering: yes' in status:
+        raise ValueError('Another Bluetooth discovery is active; refusing to interrupt it')
+    powered = 'Powered: yes' in status
+    try:
+        if not powered:
+            run(['bluetoothctl', 'power', 'on'])
+        print(run(['bluetoothctl', '--timeout', str(seconds), 'scan', 'on'], seconds + 5))
+    finally:
+        try:
+            run(['bluetoothctl', 'scan', 'off'])
+        finally:
+            if not powered:
+                run(['bluetoothctl', 'power', 'off'])
+
+
+def main(args):
+    if args == ['status']:
+        print(json.dumps({'wifi': radios(), 'bluetooth': run(['bluetoothctl', 'list']), 'rfkill': rfkill_states(),
+                          'note': 'Bluetooth discovery is not Wi-Fi monitor mode.'}, indent=2))
+    elif len(args) == 2 and args[0] == 'wifi-scan':
+        phy = interface(args[1])
+        with radio_available('wlan', phy):
+            print(run(['nmcli', '-f', 'SSID,BSSID,FREQ,SIGNAL,SECURITY', 'dev', 'wifi', 'list', 'ifname', args[1], '--rescan', 'yes'], 25))
+    elif len(args) == 5 and args[0] == 'wifi-capture':
+        capture(args[1], int(args[2]), args[3], int(args[4]))
+    elif len(args) == 2 and args[0] == 'bluetooth-scan':
+        seconds = int(args[1])
+        if not 1 <= seconds <= 20:
+            raise ValueError('Bluetooth discovery limit is 20 seconds')
+        with radio_available('bluetooth'):
+            bluetooth_scan(seconds)
+    elif len(args) == 2 and args[0] == 'bluetooth-log':
+        seconds = int(args[1])
+        if not 1 <= seconds <= 20:
+            raise ValueError('Local Bluetooth HCI observation limit is 20 seconds')
+        try:
+            print(run(['btmon', '-T'], seconds))
+        except subprocess.TimeoutExpired as exc:
+            print((exc.stdout or b'')[:12000].decode(errors='replace'))
+    else:
+        raise ValueError('Use status | wifi-scan IFACE | wifi-capture IFACE MHZ BSSID SECONDS | bluetooth-scan SECONDS | bluetooth-log SECONDS')
+
+
+if __name__ == '__main__':
+    def interrupted(signum, frame):
+        raise ValueError('Radio task interrupted; restoring temporary radio state')
+    signal.signal(signal.SIGTERM, interrupted)
+    signal.signal(signal.SIGINT, interrupted)
+    try:
+        main(sys.argv[1:])
+    except (ValueError, OSError, subprocess.TimeoutExpired) as exc:
+        print('Radio error:', exc)
+        raise SystemExit(1)

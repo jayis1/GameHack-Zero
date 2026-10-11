@@ -1,0 +1,45 @@
+#!/bin/bash
+# Isolated configfs NCM test. Never unload controllers or touch other gadgets.
+set -Eeuo pipefail
+G=/sys/kernel/config/usb_gadget/gamehack_ncm
+case "${1:-}" in
+  start)
+    modprobe libcomposite
+    mountpoint -q /sys/kernel/config || mount -t configfs configfs /sys/kernel/config
+    test ! -e "$G" || { echo 'GameHack NCM already exists; refusing duplicate setup' >&2; exit 1; }
+    udcs=(/sys/class/udc/*)
+    test "${#udcs[@]}" -eq 1 && test -e "${udcs[0]}"
+    controller="${udcs[0]##*/}"
+    mkdir "$G"
+    # A known Linux NCM gadget identity; pairing uses the fixed MAC and SSH key.
+    echo 0x0525 > "$G/idVendor"
+    echo 0xa4a1 > "$G/idProduct"
+    echo 0x0100 > "$G/bcdDevice"
+    echo 0x0200 > "$G/bcdUSB"
+    mkdir "$G/strings/0x409"
+    echo gamehack-companion-ncm > "$G/strings/0x409/serialnumber"
+    echo GameHack > "$G/strings/0x409/manufacturer"
+    echo 'GameHack Companion NCM test' > "$G/strings/0x409/product"
+    mkdir "$G/configs/c.1"
+    mkdir "$G/configs/c.1/strings/0x409"
+    echo 'USB NCM' > "$G/configs/c.1/strings/0x409/configuration"
+    echo 250 > "$G/configs/c.1/MaxPower"
+    mkdir "$G/functions/ncm.usb0"
+    echo 02:47:48:50:49:01 > "$G/functions/ncm.usb0/dev_addr"
+    echo 02:47:48:50:49:02 > "$G/functions/ncm.usb0/host_addr"
+    echo 1 > "$G/functions/ncm.usb0/qmult"
+    ln -s "$G/functions/ncm.usb0" "$G/configs/c.1/ncm.usb0"
+    echo "$controller" > "$G/UDC"
+    echo 'GameHack NCM gadget bound; native packet transfer still requires testing.'
+    ;;
+  stop)
+    test -d "$G" || exit 0
+    echo '' > "$G/UDC"
+    test ! -L "$G/configs/c.1/ncm.usb0" || unlink "$G/configs/c.1/ncm.usb0"
+    for directory in configs/c.1/strings/0x409 configs/c.1 functions/ncm.usb0 strings/0x409; do
+      test ! -d "$G/$directory" || rmdir "$G/$directory"
+    done
+    rmdir "$G"
+    ;;
+  *) echo 'Usage: gamehack-usb-ncm start|stop' >&2; exit 2 ;;
+esac

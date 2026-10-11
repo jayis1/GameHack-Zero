@@ -1,0 +1,5 @@
+GameHack Companion — Raspberry Pi Zero W
+USB SSH: companion@192.168.77.1 (paired key required)
+Commands: gamehack-companion status | files | shutdown | reboot
+Shared files: ~/shared
+Safely shut down before unplugging power.

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -euo pipefail
+
+for _ in $(seq 1 30); do
+  [ -e /sys/class/net/usb0 ] && break
+  sleep 1
+done
+[ -e /sys/class/net/usb0 ] || exit 1
+ip link set usb0 up
+ip address replace 10.55.0.2/24 dev usb0
+exec dnsmasq --keep-in-foreground --interface=usb0 --bind-interfaces \
+  --dhcp-range=10.55.0.1,10.55.0.1,255.255.255.0,1h --dhcp-option=3 --dhcp-option=6 \
+  --pid-file=/run/hackeros-dnsmasq.pid --conf-file=/dev/null

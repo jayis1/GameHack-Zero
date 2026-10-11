@@ -1,0 +1,14 @@
+[Unit]
+Description=GameHack experimental USB NCM Ethernet gadget
+After=local-fs.target systemd-udevd.service
+Before=NetworkManager.service gamehack-usb-dhcp.service ssh.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/gamehack-usb-ncm start
+ExecStop=/usr/local/sbin/gamehack-usb-ncm stop
+RemainAfterExit=yes
+TimeoutStartSec=20
+
+[Install]
+WantedBy=multi-user.target

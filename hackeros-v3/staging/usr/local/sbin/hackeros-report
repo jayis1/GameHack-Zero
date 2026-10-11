@@ -1,0 +1,98 @@
+#!/bin/bash
+
+set -u
+
+case "${1:-}" in
+  network)
+    echo "INTERFACES"
+    ip -brief address
+    echo
+    echo "ROUTES"
+    ip route
+    echo
+    echo "RADIOS"
+    rfkill list 2>/dev/null || true
+    echo
+    echo "WI-FI"
+    nmcli -f GENERAL.DEVICE,GENERAL.STATE,GENERAL.CONNECTION device show 2>/dev/null || true
+    ;;
+  hardware)
+    echo "MODEL"
+    tr '\0' '\n' </proc/device-tree/model 2>/dev/null || true
+    echo
+    uname -a
+    echo
+    echo "INPUT"
+    awk '/^N: Name=|^H: Handlers=/' /proc/bus/input/devices 2>/dev/null
+    echo
+    echo "USB"
+    lsusb 2>/dev/null || true
+    echo
+    echo "BLOCK DEVICES"
+    lsblk -o NAME,SIZE,FSTYPE,LABEL,MOUNTPOINTS
+    ;;
+  tools)
+    for tool in nmap ncat tcpdump tshark aircrack-ng hydra masscan arp-scan netdiscover sqlmap nikto dirb wfuzz john hashcat binwalk yara fls foremost testdisk exiftool gdb strace openocd i2cdetect gpiodetect git python3 node tmux; do
+      if command -v "$tool" >/dev/null 2>&1; then
+        printf '%-18s %s\n' "$tool" "$(command -v "$tool")"
+      fi
+    done
+    ;;
+  otg)
+    echo "UDC: $(ls /sys/class/udc 2>/dev/null | paste -sd ' ' -)"
+    echo "usb0: $(cat /sys/class/net/usb0/operstate 2>/dev/null || echo unavailable)"
+    ip -brief address show usb0 2>/dev/null || true
+    echo
+    systemctl --no-pager --full status hackeros-gadget.service hackeros-usb-network.service 2>&1 | tail -n 24
+    ;;
+  ir)
+    echo "INFRARED HARDWARE"
+    if lsusb -d 10c4:8468 >/dev/null 2>&1; then
+      echo "Tiqiaa Tview detected (10c4:8468)"
+      echo
+      sudo /usr/local/sbin/hackeros-action ir-status 2>&1 || true
+      exit 0
+    fi
+    if compgen -G '/dev/lirc*' >/dev/null; then
+      ls -l /dev/lirc*
+    else
+      echo "No Linux LIRC device detected."
+    fi
+    echo
+    echo "USB DEVICES"
+    lsusb 2>/dev/null || true
+    echo
+    echo "SERIAL ADAPTERS"
+    compgen -G '/dev/ttyACM*' || true
+    compgen -G '/dev/ttyUSB*' || true
+    echo
+    echo "Connect the USB-C IR transmitter in USB host mode."
+    echo "Its USB ID/model is required if it does not expose /dev/lirc*."
+    ;;
+  diagnostics)
+    host="${2:-}"
+    [[ "$host" =~ ^[A-Za-z0-9.-]+$ ]] || exit 2
+    echo "DNS"
+    getent ahosts "$host" 2>&1
+    echo
+    echo "HTTPS HEADERS"
+    timeout 12 curl -sS -I --max-time 10 "https://$host/" 2>&1
+    echo
+    echo "TLS CERTIFICATE"
+    timeout 12 openssl s_client -connect "$host:443" -servername "$host" </dev/null 2>/dev/null \
+      | openssl x509 -noout -subject -issuer -dates -fingerprint -sha256 2>&1
+    ;;
+  storage)
+    lsblk -o NAME,SIZE,FSTYPE,LABEL,FSAVAIL,FSUSE%,MOUNTPOINTS
+    echo
+    df -h / /data /data/external /data/debug 2>/dev/null || true
+    echo
+    echo "SD2 ROMs: /data/external/roms (GHROMS)"
+    echo "SD2 debug reports: /data/debug/sessions (GHDEBUG)"
+    echo "Automatic reports: every minute, up to 20 boot sessions. No radio captures or task output copied."
+    ;;
+  *)
+    echo "Usage: hackeros-report {network|hardware|tools|otg|ir|diagnostics HOST|storage}" >&2
+    exit 2
+    ;;
+esac

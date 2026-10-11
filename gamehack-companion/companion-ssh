@@ -1,0 +1,33 @@
+#!/bin/bash
+set -euo pipefail
+BASE=$(cd -- "$(dirname -- "$0")" && pwd)
+OPTIONS=(-i "$BASE/access/gamehack-pi-ed25519" -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile="$BASE/access/known_hosts" -o ConnectTimeout=10)
+case "${1:-status}" in
+    status|files|shutdown|reboot|jobs)
+        test "$#" -le 1
+        exec ssh "${OPTIONS[@]}" companion@192.168.77.1 gamehack-companion "${1:-status}"
+        ;;
+    submit|result|cancel)
+        test "$#" -eq 2
+        printf -v REMOTE 'gamehack-companion %q %q' "$1" "$2"
+        exec ssh "${OPTIONS[@]}" companion@192.168.77.1 "$REMOTE"
+        ;;
+    radio)
+        test "$#" -ge 2
+        REMOTE='gamehack-companion radio'
+        for arg in "${@:2}"; do
+            printf -v quoted '%q' "$arg"
+            REMOTE+=" $quoted"
+        done
+        exec ssh "${OPTIONS[@]}" companion@192.168.77.1 "$REMOTE"
+        ;;
+    shell)
+        test "$#" -eq 1
+        exec ssh "${OPTIONS[@]}" -t companion@192.168.77.1
+        ;;
+    upload)
+        test "$#" -eq 2
+        exec scp "${OPTIONS[@]}" -- "$2" companion@192.168.77.1:shared/
+        ;;
+    *) echo 'Usage: companion-ssh status|files|shell|shutdown|reboot|jobs|submit COMMAND|result ID|cancel ID|radio ACTION|upload FILE' >&2; exit 2 ;;
+esac

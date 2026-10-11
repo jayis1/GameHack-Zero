@@ -1,0 +1,9 @@
+PRETTY_NAME="GameHack Zero 4.2.0 (R36XX)"
+NAME="GameHack Zero"
+VERSION_ID="4.2.0"
+VERSION="4.2.0 (R36XX)"
+VERSION_CODENAME=r36xx
+ID=gamehack-zero
+ID_LIKE=debian
+HOME_URL="https://github.com/jayis1/Zero-Day-OS-"
+SUPPORT_URL="https://github.com/jayis1/Zero-Day-OS-/issues"

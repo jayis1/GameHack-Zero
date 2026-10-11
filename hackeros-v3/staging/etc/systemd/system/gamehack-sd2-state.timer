@@ -1,0 +1,10 @@
+[Unit]
+Description=Record SD2 controller state once after boot
+
+[Timer]
+OnBootSec=30s
+AccuracySec=2s
+Unit=gamehack-sd2-state.service
+
+[Install]
+WantedBy=timers.target

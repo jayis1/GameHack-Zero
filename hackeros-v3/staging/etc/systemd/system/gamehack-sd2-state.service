@@ -1,0 +1,14 @@
+[Unit]
+Description=Record GameHack SD2 controller clock and regulator diagnostics
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /usr/local/lib/gamehack-zero/sd2_state.py
+StandardOutput=journal
+StandardError=journal
+TimeoutStartSec=15
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes

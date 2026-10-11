@@ -1,0 +1,11 @@
+[Unit]
+Description=Mount GameHack Zero expansion microSD
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/hackeros-storage
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,29 @@
+[Unit]
+Description=GameHack Zero controller interface
+After=multi-user.target systemd-user-sessions.service
+Conflicts=getty@tty1.service
+
+[Service]
+Type=simple
+User=hacker
+Group=hacker
+SupplementaryGroups=input video render audio netdev
+WorkingDirectory=/home/hacker
+Environment=HOME=/home/hacker
+Environment=PYTHONUNBUFFERED=1
+Environment=SDL_VIDEODRIVER=kmsdrm
+Environment=SDL_NOMOUSE=1
+TTYPath=/dev/tty1
+StandardInput=tty
+StandardOutput=journal
+StandardError=journal
+ExecStart=/usr/bin/python3 /opt/hackeros/launcher.py
+Restart=always
+RestartSec=2
+NoNewPrivileges=no
+PrivateTmp=yes
+ProtectSystem=full
+ReadWritePaths=/data /home/hacker
+
+[Install]
+WantedBy=multi-user.target

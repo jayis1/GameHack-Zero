@@ -1,0 +1,11 @@
+[Unit]
+Description=Update GameHack SD2 debug snapshots every minute
+
+[Timer]
+OnBootSec=20s
+OnUnitInactiveSec=60s
+AccuracySec=5s
+Unit=gamehack-sd2-debug.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,14 @@
+[Unit]
+Description=GameHack SD2 bounded USB/network diagnostic snapshot
+After=hackeros-storage.service NetworkManager.service
+
+[Service]
+Type=oneshot
+User=hacker
+Group=hacker
+SupplementaryGroups=systemd-journal adm
+UMask=0077
+ExecStartPre=+/usr/local/sbin/hackeros-storage
+ExecStart=/usr/bin/python3 /usr/local/lib/gamehack-zero/sd2_debug.py
+TimeoutStartSec=90
+Nice=10

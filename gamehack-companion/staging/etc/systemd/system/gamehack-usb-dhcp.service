@@ -1,0 +1,15 @@
+[Unit]
+Description=GameHack Companion USB address service
+After=NetworkManager.service
+Wants=NetworkManager.service
+
+[Service]
+Type=simple
+RuntimeDirectory=gamehack-usb-dhcp
+ExecStartPre=/usr/bin/chown dnsmasq:nogroup /run/gamehack-usb-dhcp
+ExecStart=/usr/sbin/dnsmasq --keep-in-foreground --conf-file=/etc/gamehack-usb-dhcp.conf
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

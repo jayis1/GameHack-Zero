@@ -1,0 +1,2 @@
+# Restricted to the input group for the handheld's game controller bridge.
+KERNEL=="uinput", SUBSYSTEM=="misc", GROUP="input", MODE="0660"

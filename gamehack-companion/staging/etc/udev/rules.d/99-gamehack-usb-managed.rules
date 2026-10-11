@@ -1,0 +1,2 @@
+# Override the distribution's unmanaged-gadget rule for this paired link only.
+SUBSYSTEM=="net", ACTION=="add|change|move", ATTR{address}=="02:47:48:50:49:01", ENV{NM_UNMANAGED}="0"

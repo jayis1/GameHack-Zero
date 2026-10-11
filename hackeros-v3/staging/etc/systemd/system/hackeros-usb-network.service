@@ -1,0 +1,16 @@
+[Unit]
+Description=GameHack Zero OTG network and DHCP
+Requires=hackeros-gadget.service
+After=hackeros-gadget.service
+Before=ssh.service
+ConditionPathExists=/sys/class/net/usb0
+ConditionPathExistsGlob=/sys/class/udc/*
+
+[Service]
+Type=simple
+ExecStart=/usr/local/sbin/hackeros-usb-network
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

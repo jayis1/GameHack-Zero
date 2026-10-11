@@ -1,0 +1,111 @@
+#!/bin/bash
+
+set -euo pipefail
+
+ACTION="${1:-}"
+case "$ACTION" in
+  wifi-diagnostics)
+    test "$#" -eq 1
+    exec /usr/bin/python3 /usr/local/lib/gamehack-zero/wifi_diagnostics.py
+    ;;
+  monitor-list)
+    exec /usr/bin/python3 /usr/local/lib/gamehack-zero/monitor_wifi.py list
+    ;;
+  monitor-capture)
+    test "$#" -eq 5
+    exec /usr/bin/python3 /usr/local/lib/gamehack-zero/monitor_wifi.py capture "$2" "$3" "$4" "$5"
+    ;;
+  monitor-disconnect)
+    test "$#" -eq 2
+    exec /usr/bin/python3 /usr/local/lib/gamehack-zero/monitor_wifi.py disconnect "$2"
+    ;;
+  wifi-enable)
+    systemctl start NetworkManager
+    rfkill unblock wifi
+    nmcli radio wifi on
+    ;;
+  capture)
+    iface="$(ip -4 route show default | awk '{print $5; exit}')"
+    [ -n "$iface" ] || iface="$(ls /sys/class/net | grep -Ev '^(lo|usb0)$' | head -n 1)"
+    [[ "$iface" =~ ^[A-Za-z0-9_.:-]+$ ]] || { echo "No capture interface found."; exit 1; }
+    output="/data/gamehack-zero/captures/capture-$(date +%Y%m%d-%H%M%S).pcap"
+    install -d -o hacker -g hacker -m 0700 /data/gamehack-zero/captures
+    timeout 60 tcpdump -i "$iface" -c 250 -nn -w "$output"
+    chown hacker:hacker "$output"
+    echo "Saved: $output"
+    tcpdump -nn -r "$output" 2>/dev/null | wc -l | xargs echo "Packets:"
+    ;;
+  bluetooth-scan)
+    rfkill unblock bluetooth || true
+    systemctl start bluetooth
+    timeout 12 bluetoothctl scan on >/dev/null 2>&1 || true
+    bluetoothctl devices
+    ;;
+  ir-status)
+    exec /usr/bin/python3 /usr/local/lib/gamehack-zero/tiqiaa_ir.py status
+    ;;
+  ir-send)
+    file="${2:-}"
+    [ -f "$file" ] || { echo "IR signal file not found."; exit 2; }
+    real="$(realpath "$file")"
+    case "$real" in
+      /data/gamehack-zero/ir/*|/data/external/*|/usr/local/share/gamehack-zero/ir-database/*) ;;
+      *) echo "IR files must be under /data/gamehack-zero/ir or /data/external."; exit 2 ;;
+    esac
+    if [ -n "${3:-}" ]; then
+      [[ "$3" =~ ^[0-9]+$ ]] || { echo "Invalid IR button index."; exit 2; }
+      exec /usr/bin/python3 /usr/local/lib/gamehack-zero/tiqiaa_ir.py send "$real" --button "$3"
+    fi
+    exec /usr/bin/python3 /usr/local/lib/gamehack-zero/tiqiaa_ir.py send "$real"
+    ;;
+  ir-learn)
+    directory=/data/gamehack-zero/ir
+    install -d -o hacker -g hacker -m 0750 "$directory"
+    output="$directory/capture-$(date +%Y%m%d-%H%M%S).ir"
+    /usr/bin/python3 /usr/local/lib/gamehack-zero/tiqiaa_ir.py learn "$output" --timeout 30
+    chown hacker:hacker "$output"
+    echo "Saved: $output"
+    ;;
+  power)
+    profile="${2:-}"
+    case "$profile" in
+      performance) governor="performance" ;;
+      balanced) governor="schedutil" ;;
+      *) exit 2 ;;
+    esac
+    for cpu in /sys/devices/system/cpu/cpufreq/policy*/scaling_governor; do
+      [ -w "$cpu" ] && echo "$governor" >"$cpu"
+    done
+    echo "Power profile: $profile ($governor)"
+    ;;
+  eject)
+    touch /run/gamehack-sd2-ejected
+    systemctl stop gamehack-sd2-debug.timer gamehack-sd2-debug.service
+    sync
+    for target in /data/external /data/debug; do
+      mountpoint -q "$target" && umount "$target" || { mountpoint -q "$target" && exit 1; true; }
+    done
+    echo "Both expansion partitions are unmounted. Card can now be removed. Reboot to enable automatic SD2 mounting again."
+    ;;
+  usb-mode)
+    mode="${2:-}"
+    case "$mode" in
+      host|gadget) ;;
+      *) exit 2 ;;
+    esac
+    source="/boot/dtb/rockchip/rk3326-gameconsole-r36s-${mode}.dtb"
+    [ -f "$source" ] || { echo "Missing $source"; exit 1; }
+    cp "$source" /boot/dtb/rockchip/rk3326-gameconsole-r36s.dtb
+    sync
+    systemctl reboot
+    ;;
+  reboot)
+    systemctl reboot
+    ;;
+  poweroff)
+    systemctl poweroff
+    ;;
+  *)
+    exit 2
+    ;;
+esac

@@ -1,0 +1,5 @@
+NAME="GameHack Zero"
+VERSION="4.2.0"
+CODENAME="R36XX"
+BOARD="R36S Panel 4"
+BASE="Zero-Day OS converted for R36XX on Debian 12"
