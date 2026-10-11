@@ -64,6 +64,17 @@ native testing. Do not advertise software tests as proof of TF2 or radio support
 
 ## Publishing safely
 
+The root `.gitignore` excludes OS images/release output, private image-validation
+clones, pairing/provider credentials, Wi-Fi profiles, ROMs/BIOS, device logs and
+build caches. Only the two reviewed USB NetworkManager profiles are allowlisted.
+Environment examples remain trackable, but must contain placeholders, not secrets.
+Keep downloadable images as reviewed release assets, never Git source blobs.
+
+Ignore rules do **not** remove files already tracked or erase Git history. Before
+publishing, review `git diff --cached` and check for tracked ignored files with
+`git ls-files -ci --exclude-standard`. Never force-add private files. If a secret
+has entered history, revoke/rotate it and review remediation before going public.
+
 The repository is a sanitized snapshot separate from the live development
 folders. Sync reviewed source changes deliberately; never mirror card images,
 access folders, capture/vault contents or device log directories into it.
