@@ -1,14 +1,96 @@
 # 🐬 GameHack Zero
 
-### The “Flipper 1” dev version that never was… until it sort of was.
+### Controller-first handheld OS with a two-Pi companion system
+
+**Updated 14 October 2026 · GameHack Zero 4.2.0 development beta.**
+
+## 🎮 The handheld is becoming its own development machine
+
+OpenCode runs **on GameHack itself**. The owner is signed in and using Build to
+inspect the actual hardware, improve the OS, write documentation and prepare
+scripts for local installation—not just use a remote coding demo.
+
+Reviewed on-device work includes hardware-aware settings, workload power
+profiles, thermal fallback, quieter diagnostics, emulator/media defaults and
+idle terminal-redraw optimization. These changes are installed on the development
+card; performance gains and broader gameplay acceptance still need native tests.
+
+**Another owner-created whole-OS update batch is waiting to be reviewed.** We
+will read its documentation/scripts and preserve its changes before merging
+further updates. Unreviewed work is not yet advertised as validated functionality.
+
+### Latest handheld milestones
+
+- **YouTube:** owner-confirmed working video playback after the isolated JS/EJS
+  resolver fix and low-resolution H.264 preference.
+- **Simple browser:** Links text browsing installed; native HTTPS and terminal
+  mouse transport passed. No JavaScript-heavy sites or web video are promised.
+- **OpenCode links:** X → Open visible web link → review → browse → return to
+  the existing coding session. Not a system-wide URL opener or an OAuth browser.
+- **L3 review:** installed through a narrow backed-up merge preserving native
+  tuning/redraw work. L3 toggles review; D-pad up/down pages through long answers
+  and questions; L3 returns to typing. ARM behavioral checks passed; actual
+  on-device controller acceptance is still pending.
+- **Optional menu sounds:** default muted, selectable volume, with audio release
+  before games/media; native handoff testing remains a separate gate.
+
+## Current architecture
+
+```text
+GameHack Zero / R36XX onboard Wi-Fi
+  └─ trusted Wi-Fi, strictly pinned SSH → Pi A (32GB)
+       └─ Pi A USB host/data → Pi B USB gadget (separate 32GB)
+```
+
+GameHack uses **internal Wi-Fi; IR is the only external handheld OTG device in
+supported scope**. Jellyfin is the intended media-center client, filling Kodi's
+role. Compatible dArkOS code is reused without replacing the working board profile.
+
+**Pi A:** Zero W Rev 1.1; native pinned Wi-Fi SSH works. Its Waveshare 2.13-inch
+monochrome V4 dashboard is installed, with original A/B mascots and owner-confirmed
+portrait orientation. PiSugar S supplies no software battery percentage/voltage;
+button/shutdown integration and the Pi A→Pi B power budget remain unverified.
+
+**Pi B:** distinct image verified and flashed to its own card. Native enrollment,
+radio capability checks and Pi A→Pi B relay remain pending; the data cable is
+awaited. Active labs must never autostart on boot, restart or cable attachment.
+Activation must be explicit GameHack → pinned SSH Pi A → Pi B. Wi-Fi monitor
+support and Bluetooth HCI/over-air limitations must be capability-tested.
+
+Trusted home Wi-Fi is the current test network. The SanDisk media drive's AP is
+the intended final shared network, subject to client-to-client connectivity.
+No automatic LAN trust, key replacement or handheld USB fallback.
+
+**Retired on handheld:** direct Pi USB pairing, hubs, USB mode switches,
+Bluetooth dongles and external capture radios. Essential USB support for
+onboard Wi-Fi stays. Pi A's temporary PC recovery and Pi A→Pi B link are separate.
+IR transmission and Wi-Fi/IR coexistence still require native tests. Independent
+exact-board firmware reproduced the cable/Wi-Fi failure; no software-only fix is claimed.
+
+**Safety:** preserve 256GB GHROMS/GHDEBUG, ROMs, saves, accounts, keys and setup
+progress. Never whole-flash a fresh image over that library. Fresh builds
+preformat four volumes; automatic smaller-image expansion is not implemented.
+
+**Source ≠ installed card ≠ release image.** A corrected fresh handheld image
+passed build checks but is not natively boot-qualified and predates the latest
+resolver/browser/tuning/L3 work. Older images and this sanitized executable
+export may lag the live card. Updating this README does not synchronize all
+code, publish a new image, or declare every feature complete.
+
+Start with [handheld overview](hackeros-v3/README.md) and
+[Pi A/Pi B overview](gamehack-companion/README.md).
+The narrative below is historical background; its earlier USB workflows and
+status descriptions are **not current deployment instructions**. Use the current
+architecture and status above for the two-Pi design.
+
+### Historical inspiration: an independent Linux project, not Flipper firmware
 
 **A Linux handheld, a tiny Pi sidekick, and a suspicious amount of ambition.**
 
 **Consolidated development release: GameHack Zero 4.2.0.**
 See [release notes](hackeros-v3/staging/opt/hackeros/RELEASE-4.2.0.md) and the
 [deployment checklist](RELEASE-4.2.0.md).
-Installed and verified on the handheld system card; Pi release-marker
-deployment remains pending. Native hardware validation is tracked below.
+This is a development version, not a declaration of finished hardware support.
 
 > **Fictional origin story. Real DIY project.**
 > GameHack Zero is an independent project—not a Flipper Devices product,
@@ -51,11 +133,12 @@ The dolphin remained fictional. The debugging did not.
 | Crew member | Job description |
 | --- | --- |
 | **GameHack Zero 4.2.0** | R36XX handheld running a Debian/Armbian-based system and controller-driven tools. |
-| **Pi companion OS** | Raspberry Pi Zero W running Raspberry Pi OS Lite and a subordinate USB worker. |
+| **Pi A** | Zero W: pinned Wi-Fi SSH worker, e-paper dashboard, future USB host for Pi B. |
+| **Pi B** | Separate card/identity; image flashed, native enrollment and relay testing pending. |
 | **USB-C IR accessory** | External infrared adapter; the sender implementation targets Tiqiaa/Tview hardware with USB ID `10c4:8468`. |
-| **64GB system card** | Preserved working installation and source for the single-card migration. |
-| **32GB Pi card** | The sidekick's OS, worker queue, and saved results. |
-| **256GB single-card route** | BOOT, system, debug/captures and ROMs together in TF1; restoration/filesystem checks passed, native boot pending. |
+| **64GB comparison card** | Repurposed with explicit approval for exact-board firmware research. |
+| **Two 32GB Pi cards** | Independent Pi A and Pi B systems and identities. |
+| **256GB single-card route** | Protected primary TF1 system; native boot, Wi-Fi, coding and YouTube observed. |
 | **128GB expansion card** | Prepared ROM/debug storage for TF2; native TF2 detection remains unresolved. |
 
 The handheld is the captain. The Pi is the crew—not a replacement for the
@@ -65,7 +148,7 @@ handheld's Wi-Fi, and not an excuse to require SSH for every interaction.
 
 The current development route puts the handheld OS and libraries on **one 256GB
 card in TF1**, leaving TF2 empty. This bypasses the TF2 initialization failure;
-**it does not fix TF2**. The original 64GB system card remains unchanged.
+**it does not fix TF2**. The 64GB card was later repurposed for firmware comparison.
 
 | Area | Allocation | Purpose |
 | --- | --- | --- |
@@ -88,7 +171,8 @@ system disk. **Shut down fully before removing the TF1 system card.**
 files were preserved and verified on the development PC. All 7,220 library files
 passed byte-for-byte restoration verification, all four filesystems passed checks,
 and bootloader/boot settings and reviewed safety updates were verified. The card
-was safely ejected. Native TF1-only boot and actual ROM gameplay remain pending.
+was safely ejected at that checkpoint. Native TF1-only boot, Wi-Fi, OpenCode and
+YouTube have since been observed; broader gameplay acceptance remains pending.
 Do not treat this README as a completed
 hardware test or an instruction to flash an older release image.
 
@@ -101,14 +185,16 @@ in place. A single reader can be used sequentially via verified PC-held copies.
 
 - **Controller-first launcher:** menus, on-screen keyboard, themes, favorites,
   and recent actions. **L2 goes back. R2 says yes.**
-- **Networking workflows:** Wi-Fi setup, Bluetooth tools, SSH, and diagnostics.
-- **USB Pi worker:** pinned, key-only SSH over a USB Ethernet link, with queued
-  jobs, saved results, and cancellation.
+- **Networking workflows:** internal Wi-Fi setup, pinned SSH and diagnostics.
+- **Pi A worker:** Wi-Fi-only, explicitly enrolled, strictly pinned SSH;
+  handheld enrollment and the later Pi B relay remain incomplete.
 - **Infrared library:** 8,901 remote files from
   [Flipper-IRDB](https://github.com/Lucaslhm/Flipper-IRDB), adapted for GameHack's
   remote-and-button selection UI.
 - **Local coding frontend:** an on-device terminal, controller keyboard, and
-  OpenCode integration. Cloud providers still need internet and credentials.
+  OpenCode Build with R3 mouse and L3 review. Cloud providers still need internet
+  and credentials; system changes still require Linux permissions.
+- **Media/web:** working YouTube, intended Jellyfin client and lightweight text browsing.
 - **Freedoom:** because every serious development story eventually becomes
   “yes, but can it run Doom?”
 - **Expansion storage:** UUID-pinned debug/ROM mounts, bounded diagnostic
@@ -149,7 +235,8 @@ uploading source is not proof that every integration is hardware-tested.
 
 Existing handheld adapter hooks are included here, but the separate drive
 project is not vendored into GameHack. **Neither GameHack nor the Pi requires
-a SanDisk drive.** The Pi remains the independent pinned USB worker.
+a SanDisk drive.** Pi A is controlled through pinned Wi-Fi SSH; the SanDisk AP is
+the intended later shared network, not a requirement for current home testing.
 
 ## 🚧 Development build, not a magic wand
 
@@ -157,13 +244,16 @@ The story is playful. The status reports are not.
 
 | Area | Current reality |
 | --- | --- |
-| Software regression tests | 65 handheld and 12 Pi tests pass in this source snapshot. |
+| Software regression tests | Latest private checks: 263 handheld source tests, 127 image tests, plus 25 merged terminal/browser tests and redraw checks. These counts do not qualify the lagging executable export. |
 | IR database | Installed; raw, NEC, and NECext conversion supported. Other parsed protocols are explicitly marked unsupported. Native transmission still needs testing. |
 | IR carrier | The current Tiqiaa adapter uses a fixed ~36.6kHz carrier. Database frequencies cannot change that hardware limitation. |
-| Pi USB networking | NCM validated on a PC. Handheld connectivity and Wi-Fi coexistence still need validation. |
+| Pi A networking/display | Native pinned Wi-Fi SSH works; portrait V4 e-paper orientation confirmed by owner. |
+| Pi A→Pi B | Pi B image flashed; cable, power safety, enrollment and explicit relay remain pending. No automatic active labs. |
 | TF2 / expansion card | Not fixed: the handheld times out during controller initialization, before partitions or ROMs can be read. |
-| 256GB TF1-only route | Restore, file comparison, bootloader and all filesystem checks passed; safely ejected. Native boot/gameplay pending; bypasses rather than repairs TF2. |
-| Local OpenCode | Frontend installed; native provider execution and interactive compatibility remain to be verified. |
+| 256GB TF1-only route | Working protected system; latest narrow L3 update passed clean checks. Bypasses rather than fixes TF2. |
+| Local OpenCode | Owner signed in and developing OS changes; L3 installed, native review-button acceptance pending. |
+| YouTube | Owner confirms working video; not a claim of all-codec/Jellyfin/hardware-decoding acceptance. |
+| Whole-OS tuning | Reviewed native changes preserved; next owner-created batch awaits documentation/script review. |
 | Original Zero-Day feature set | Audited and partially adapted—not a claim that every upstream feature has been ported. |
 
 Passing software tests does **not** mean every radio, adapter, or handheld
@@ -186,8 +276,9 @@ Start with the project notes in each folder. On the handheld side:
 - [`DARKOS-SD2-COMPARISON.md`](hackeros-v3/DARKOS-SD2-COMPARISON.md): TF2 evidence
   and why we aren't blindly copying device trees.
 
-For the Pi, see [`NCM-TEST.md`](gamehack-companion/NCM-TEST.md) for USB networking
-validation and rollback notes.
+For the Pi, start with its [role/access overview](gamehack-companion/README.md).
+[`NCM-TEST.md`](gamehack-companion/NCM-TEST.md) records historical recovery-link
+tests, not instructions for direct handheld→Pi USB pairing.
 
 > **Source snapshot, not a flashable image:** this repository contains real source
 > directories, not local symlinks. Card images, backups, keys, credentials, ROMs,
@@ -214,6 +305,11 @@ before pushing to GitHub.
 
 - [Zero-Day OS](https://github.com/jayis1/Zero-Day-OS-): the original toolbox
   concept behind this adaptation.
+- dArkOS/ArkOS contributors: compatible handheld code and platform research,
+  adapted with per-component licensing, not a blanket license.
+- Links, QuickJS-NG and yt-dlp/EJS: lightweight browsing and media resolution.
+- Bjorn and Waveshare: reused display-driver work with notices retained;
+  GameHack's dashboard mascots are original.
 - [Flipper-IRDB](https://github.com/Lucaslhm/Flipper-IRDB): community infrared
   remote data. The database is an external dependency, not vendored here; upstream notes that
   contributions before commit `2319685` are not covered by its CC0 declaration.
